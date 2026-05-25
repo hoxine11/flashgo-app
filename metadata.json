@@ -1,0 +1,6 @@
+{
+  "name": "Flash Go",
+  "description": "An interactive, high-fidelity responsive web application for Flash Go - a premier multi-service delivery platform including ride-hailing, parcel delivery, grocery errands, and food delivery, featuring an integrated phone simulator, real-time-like order tracking, wallet, and bilingual (AR/EN) support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
