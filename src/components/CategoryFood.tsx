@@ -154,7 +154,7 @@ export default function CategoryFood({ lang, onBack, onSubmitOrder, user }: Cate
 
   {/* Image */}
   <img
-    src="../image/food.png"
+    src="/image/food.png"
     alt="Food Banner"
     className="
       w-full

@@ -125,7 +125,7 @@ export default function CategoryGrocery({ lang, onBack, onSubmitOrder, user }: C
 
   {/* Image */}
   <img
-    src="../image/alimentation.png"
+    src="/image/alimentation.png"
     alt="Grocery Banner"
     className="
       w-full

@@ -88,7 +88,7 @@ export default function CategoryRide({ lang, onBack, onSubmitOrder, user }: Cate
       {/* Hero Image — full bleed, no header bar */}
       <div className="relative w-full h-52 flex-shrink-0 overflow-hidden">
         <img
-          src="../image/rider.png"
+          src="/image/rider.png"
           alt="Ride"
           className="w-full h-full object-cover object-[center_25%] brightness-75"
         />

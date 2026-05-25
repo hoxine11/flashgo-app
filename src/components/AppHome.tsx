@@ -46,7 +46,7 @@ export default function AppHome({ lang, user, onSelectCategory, onSelectPromo }:
 
   <div className="flex justify-center items-center flex-1 group-hover:scale-105 transition-all duration-300">
     <img
-      src="../image/zabon-removebg-preview.png"
+      src="/image/zabon-removebg-preview.png"
       alt="ride"
       className="w-24 h-24 object-contain"
     />
@@ -76,7 +76,7 @@ export default function AppHome({ lang, user, onSelectCategory, onSelectPromo }:
 
   <div className="flex justify-center items-center flex-1 group-hover:scale-105 transition-all duration-300">
     <img
-      src="../image/torod-removebg-preview.png"
+      src="/image/torod-removebg-preview.png"
       alt="parcel"
       className="w-24 h-24 object-contain"
     />
@@ -106,7 +106,7 @@ export default function AppHome({ lang, user, onSelectCategory, onSelectPromo }:
 
   <div className="flex justify-center items-center flex-1 group-hover:scale-105 transition-all duration-300">
     <img
-      src="../image/alimentation-removebg-preview.png"
+      src="/image/alimentation-removebg-preview.png"
       alt="grocery"
       className="w-24 h-24 object-contain"
     />
@@ -140,7 +140,7 @@ export default function AppHome({ lang, user, onSelectCategory, onSelectPromo }:
   {/* Center Image */}
   <div className="flex justify-center items-center flex-1 group-hover:scale-105 transition-all duration-300">
     <img
-      src="../image/food-removebg-preview.png"
+      src="/image/food-removebg-preview.png"
       alt="food"
       className="w-24 h-24 object-contain"
     />

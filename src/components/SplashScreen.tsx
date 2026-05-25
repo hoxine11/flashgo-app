@@ -29,7 +29,7 @@ export default function SplashScreen({ lang }: SplashScreenProps) {
           "
         >
           <img
-            src="../image/flashgo.png"
+            src="/image/flashgo.png"
             alt="Flash Go"
             className="w-full h-full object-cover object-center scale-105"
           />

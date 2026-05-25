@@ -85,7 +85,7 @@ export default function CategoryParcel({ lang, onBack, onSubmitOrder, user }: Ca
 
   {/* Image */}
   <img
-    src="../image/torod.png"
+    src="/image/torod.png"
     alt="Parcel Box"
     className="
       w-full
