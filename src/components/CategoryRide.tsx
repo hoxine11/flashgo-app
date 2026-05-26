@@ -149,47 +149,68 @@ export default function CategoryRide({ lang, onBack, onSubmitOrder, user }: Cate
     {/* MAP BUTTON */}
     <button
      
+
 onClick={() => {
 
-  if (navigator.geolocation) {
-
-    navigator.geolocation.getCurrentPosition(
-
-      (position) => {
-
-        const lat = position.coords.latitude;
-        const lng = position.coords.longitude;
-
-        // OPEN GOOGLE MAPS
-
-        window.open(
-          `https://www.google.com/maps?q=${lat},${lng}`,
-          '_blank'
-        );
-
-      },
-
-      (error) => {
-        alert(
-          isAr
-            ? 'فشل في تحديد الموقع'
-            : 'Location access denied'
-        );
-      }
-
-    );
-
-  } else {
+  if (!navigator.geolocation) {
 
     alert(
       isAr
         ? 'المتصفح لا يدعم GPS'
-        : 'Geolocation not supported'
+        : 'Geolocation is not supported'
     );
 
+    return;
   }
 
+  navigator.geolocation.getCurrentPosition(
+
+    (position) => {
+
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      console.log('LAT:', lat);
+      console.log('LNG:', lng);
+
+      // PUT LOCATION INSIDE INPUT
+
+      setPickup(
+        `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`
+      );
+
+      // OPEN GOOGLE MAPS
+
+      window.open(
+        `https://www.google.com/maps?q=${lat},${lng}`,
+        '_blank'
+      );
+
+    },
+
+    (error) => {
+
+      console.error(error);
+
+      alert(
+        isAr
+          ? 'فشل الوصول للموقع'
+          : 'Failed to get location'
+      );
+
+    },
+
+    {
+      enableHighAccuracy: true,
+      timeout: 10000,
+      maximumAge: 0,
+    }
+
+  );
+
 }}
+
+
 
 
       className="
