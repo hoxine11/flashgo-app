@@ -117,37 +117,170 @@ export default function CategoryRide({ lang, onBack, onSubmitOrder, user }: Cate
       {/* Form Area */}
       <div className="flex-1 overflow-y-auto px-4 pt-5 pb-4 space-y-3">
 
-        {/* Pickup Field */}
-        <div className="relative">
-          <div
-            onClick={() => { setShowPickupDropdown(!showPickupDropdown); setShowDestDropdown(false); }}
-            className="flex items-center gap-3 bg-neutral-900 border border-neutral-800 hover:border-amber-400/40 px-4 py-3.5 rounded-2xl cursor-pointer transition-all"
-          >
-            <MapPin className="h-4 w-4 text-amber-400 flex-shrink-0" />
-            <div className="flex-1 min-w-0">
-              <p className="text-[10px] text-neutral-500 mb-0.5">
-                {isAr ? 'من أين تنطلق؟' : 'Pickup location'}
-              </p>
-              <p className="text-xs text-neutral-100 font-semibold truncate">{pickup}</p>
-            </div>
-            <ChevronDown className={`h-4 w-4 text-neutral-500 flex-shrink-0 transition-transform ${showPickupDropdown ? 'rotate-180' : ''}`} />
-          </div>
+      
+{/* Pickup Field */}
+<div className="relative">
 
-          {showPickupDropdown && (
-            <div className="absolute inset-x-0 top-full mt-1 bg-neutral-900 border border-neutral-800 rounded-2xl shadow-2xl z-30 overflow-hidden">
-              {pickupOptions.map((opt) => (
-                <div
-                  key={opt.name}
-                  onClick={() => { setPickup(opt.name); setShowPickupDropdown(false); }}
-                  className="px-4 py-3 text-xs text-neutral-300 hover:bg-neutral-800 transition-colors cursor-pointer flex items-center justify-between border-b border-neutral-800/50 last:border-0"
-                >
-                  <span>{opt.name}</span>
-                  {pickup === opt.name && <Check className="h-3.5 w-3.5 text-amber-400" />}
-                </div>
-              ))}
+  <div className="relative flex items-center bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden focus-within:border-amber-400/50 transition-all">
+
+    <MapPin className="h-4 w-4 text-amber-400 absolute start-4" />
+
+    <input
+      type="text"
+      value={pickup}
+      onChange={(e) => {
+        setPickup(e.target.value);
+        setShowPickupDropdown(true);
+      }}
+      placeholder={isAr ? 'أدخل نقطة الانطلاق' : 'Enter pickup location'}
+      className="
+        w-full
+        bg-transparent
+        text-sm
+        text-white
+        placeholder:text-neutral-500
+        py-4
+        ps-11
+        pe-16
+        outline-none
+      "
+    />
+
+    {/* MAP BUTTON */}
+    <button
+     
+onClick={() => {
+
+  if (navigator.geolocation) {
+
+    navigator.geolocation.getCurrentPosition(
+
+      (position) => {
+
+        const lat = position.coords.latitude;
+        const lng = position.coords.longitude;
+
+        // OPEN GOOGLE MAPS
+
+        window.open(
+          `https://www.google.com/maps?q=${lat},${lng}`,
+          '_blank'
+        );
+
+      },
+
+      (error) => {
+        alert(
+          isAr
+            ? 'فشل في تحديد الموقع'
+            : 'Location access denied'
+        );
+      }
+
+    );
+
+  } else {
+
+    alert(
+      isAr
+        ? 'المتصفح لا يدعم GPS'
+        : 'Geolocation not supported'
+    );
+
+  }
+
+}}
+
+
+      className="
+        absolute
+        end-2
+        w-10
+        h-10
+        rounded-xl
+        bg-neutral-800
+        hover:bg-neutral-700
+        flex
+        items-center
+        justify-center
+        transition-all
+      "
+    >
+      <img
+        src="/image/maps.png"
+        alt="Maps"
+        className="w-6 h-6 object-contain"
+      />
+    </button>
+
+  </div>
+
+  {/* SUGGESTIONS */}
+  {showPickupDropdown && pickup.length > 0 && (
+
+    <div className="
+      absolute
+      inset-x-0
+      top-full
+      mt-2
+      bg-neutral-900
+      border
+      border-neutral-800
+      rounded-2xl
+      overflow-hidden
+      z-50
+      shadow-2xl
+    ">
+
+      {pickupOptions
+        .filter((loc) =>
+          loc.name
+            .toLowerCase()
+            .includes(pickup.toLowerCase())
+        )
+        .map((opt) => (
+
+          <button
+            key={opt.name}
+            onClick={() => {
+              setPickup(opt.name);
+              setShowPickupDropdown(false);
+            }}
+            className="
+              w-full
+              px-4
+              py-3
+              flex
+              items-center
+              gap-3
+              hover:bg-neutral-800
+              transition-all
+              text-left
+            "
+          >
+
+            <MapPin className="h-4 w-4 text-neutral-500" />
+
+            <div>
+              <p className="text-sm text-white font-medium">
+                {opt.name}
+              </p>
+
+              <p className="text-[11px] text-neutral-500">
+                Alger, Algeria
+              </p>
             </div>
-          )}
-        </div>
+
+          </button>
+
+      ))}
+
+    </div>
+
+  )}
+
+</div>
+
 
         {/* Destination Field */}
         <div className="relative">
