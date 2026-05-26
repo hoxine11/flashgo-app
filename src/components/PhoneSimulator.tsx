@@ -735,6 +735,114 @@ const [authState, setAuthState] =
         </AnimatePresence>
 
       </main>
+
+      {/* CUSTOMER MOBILE NAVBAR */}
+
+      {authState === 'authenticated' &&
+        currentRole === 'customer' && (
+
+        <div className="md:hidden bg-neutral-900/95 sticky bottom-0 border-t border-neutral-800 h-16 flex items-center justify-between px-4 z-40 pb-2 rounded-t-2xl">
+
+          {/* HOME */}
+          <button
+            onClick={() => {
+              setActiveTab('home');
+              setShowDirectOrderDrawer(false);
+            }}
+            className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${
+              activeTab === 'home'
+                ? 'text-amber-400 scale-105'
+                : 'text-neutral-500'
+            }`}
+          >
+            <Home className="h-5 w-5" />
+
+            <span className="text-[9px] font-bold mt-1">
+              {isAr ? 'الرئيسية' : 'Home'}
+            </span>
+          </button>
+
+          {/* ORDERS */}
+          <button
+            onClick={() => {
+              setActiveTab('orders');
+              setShowDirectOrderDrawer(false);
+            }}
+            className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${
+              activeTab === 'orders'
+                ? 'text-amber-400 scale-105'
+                : 'text-neutral-500'
+            }`}
+          >
+            <Calendar className="h-5 w-5" />
+
+            <span className="text-[9px] font-bold mt-1">
+              {isAr ? 'طلباتي' : 'Orders'}
+            </span>
+          </button>
+
+          {/* CENTER BUTTON */}
+          <div className="flex-1 flex flex-col items-center justify-center relative">
+
+            <button
+              onClick={() => {
+                setShowDirectOrderDrawer(
+                  !showDirectOrderDrawer
+                );
+              }}
+              className="absolute -top-6 w-14 h-14 bg-amber-400 text-black rounded-full flex items-center justify-center shadow-lg shadow-amber-400/25 border-4 border-neutral-950"
+            >
+              <Bike className="h-6 w-6 stroke-[2.5]" />
+            </button>
+
+            <span className="text-[9px] font-bold text-amber-400 mt-8">
+              {isAr ? 'اطلب الآن' : 'Order'}
+            </span>
+
+          </div>
+
+          {/* WALLET */}
+          <button
+            onClick={() => {
+              setActiveTab('wallet');
+              setShowDirectOrderDrawer(false);
+            }}
+            className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${
+              activeTab === 'wallet'
+                ? 'text-amber-400 scale-105'
+                : 'text-neutral-500'
+            }`}
+          >
+            <Wallet className="h-5 w-5" />
+
+            <span className="text-[9px] font-bold mt-1">
+              {isAr ? 'المحفظة' : 'Wallet'}
+            </span>
+          </button>
+
+          {/* ACCOUNT */}
+          <button
+            onClick={() => {
+              setActiveTab('account');
+              setShowDirectOrderDrawer(false);
+            }}
+            className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${
+              activeTab === 'account'
+                ? 'text-amber-400 scale-105'
+                : 'text-neutral-500'
+            }`}
+          >
+            <User className="h-5 w-5" />
+
+            <span className="text-[9px] font-bold mt-1">
+              {isAr ? 'الحساب' : 'Account'}
+            </span>
+          </button>
+
+        </div>
+      )}
+
+      
     </div>
   );
 }
