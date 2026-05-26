@@ -228,7 +228,7 @@ onClick={() => {
       "
     >
       <img
-        src="/image/maps.png"
+        src="/image/maps-removebg-preview.png"
         alt="Maps"
         className="w-6 h-6 object-contain"
       />
@@ -304,88 +304,341 @@ onClick={() => {
 
 
         {/* Destination Field */}
-        <div className="relative">
-          <div
-            onClick={() => { setShowDestDropdown(!showDestDropdown); setShowPickupDropdown(false); }}
-            className={`flex items-center gap-3 bg-neutral-900 border px-4 py-3.5 rounded-2xl cursor-pointer transition-all ${destination ? 'border-emerald-500/40' : 'border-neutral-800 hover:border-amber-400/40'}`}
-          >
-            <MapPin className="h-4 w-4 text-emerald-400 flex-shrink-0" />
-            <div className="flex-1 min-w-0">
-              <p className="text-[10px] text-neutral-500 mb-0.5">
-                {isAr ? 'إلى أين تريد الذهاب؟' : 'Where to?'}
-              </p>
-              <p className={`text-xs font-semibold truncate ${destination ? 'text-neutral-100' : 'text-neutral-500'}`}>
-                {destination ? (isAr ? destination : destinationEn) : (isAr ? 'اختر الوجهة' : 'Select destination')}
-              </p>
-            </div>
-            <ChevronDown className={`h-4 w-4 text-neutral-500 flex-shrink-0 transition-transform ${showDestDropdown ? 'rotate-180' : ''}`} />
-          </div>
+       
+{/* Destination Field */}
+<div className="relative">
 
-          {showDestDropdown && (
-            <div className="absolute inset-x-0 top-full mt-1 bg-neutral-900 border border-neutral-800 rounded-2xl shadow-2xl z-30 overflow-hidden">
-              {DESTINATION_LOCATIONS_AR.map((opt) => (
-                <div
-                  key={opt.name}
-                  onClick={() => handleSelectDest(opt)}
-                  className="px-4 py-3 hover:bg-neutral-800 transition-colors cursor-pointer flex items-center justify-between border-b border-neutral-800/50 last:border-0"
-                >
-                  <div>
-                    <p className="text-xs font-semibold text-neutral-100">{isAr ? opt.name : opt.nameEn}</p>
-                    <p className="text-[10px] text-amber-400 font-mono mt-0.5">{opt.cost} {isAr ? 'دج' : 'DA'}</p>
-                  </div>
-                  {destination === opt.name && <Check className="h-3.5 w-3.5 text-amber-400" />}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+  <div className="relative flex items-center bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden focus-within:border-emerald-400/50 transition-all">
 
-        {/* Service Tier Accordion */}
-        <div className="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden">
+    <MapPin className="h-4 w-4 text-emerald-400 absolute start-4" />
+
+    <input
+      type="text"
+      value={destination}
+      onChange={(e) => {
+        setDestination(e.target.value);
+        setShowDestDropdown(true);
+      }}
+      placeholder={
+        isAr
+          ? 'إلى أين تريد الذهاب؟'
+          : 'Where to?'
+      }
+      className="
+        w-full
+        bg-transparent
+        text-sm
+        text-white
+        placeholder:text-neutral-500
+        py-4
+        ps-11
+        pe-16
+        outline-none
+      "
+    />
+
+    {/* MAP BUTTON */}
+    <button
+      onClick={() => {
+
+        if (!navigator.geolocation) return;
+
+        navigator.geolocation.getCurrentPosition(
+
+          (position) => {
+
+            const lat =
+              position.coords.latitude;
+
+            const lng =
+              position.coords.longitude;
+
+            setDestination(
+              `Lat: ${lat.toFixed(5)}, Lng: ${lng.toFixed(5)}`
+            );
+
+            window.open(
+              `https://www.google.com/maps?q=${lat},${lng}`,
+              '_blank'
+            );
+
+          }
+
+        );
+
+      }}
+      className="
+        absolute
+        end-2
+        w-10
+        h-10
+        rounded-xl
+        bg-neutral-800
+        hover:bg-neutral-700
+        flex
+        items-center
+        justify-center
+        transition-all
+      "
+    >
+      <img
+        src="/image/maps-removebg-preview.png"
+        alt="Maps"
+        className="w-6 h-6 object-contain"
+      />
+    </button>
+
+  </div>
+
+  {/* DESTINATION SUGGESTIONS */}
+  {showDestDropdown &&
+    destination.length > 0 && (
+
+    <div className="
+      absolute
+      inset-x-0
+      top-full
+      mt-2
+      bg-neutral-900
+      border
+      border-neutral-800
+      rounded-2xl
+      overflow-hidden
+      z-50
+      shadow-2xl
+    ">
+
+      {DESTINATION_LOCATIONS_AR
+        .filter((loc) =>
+          loc.name
+            .toLowerCase()
+            .includes(destination.toLowerCase())
+        )
+        .map((opt) => (
+
           <button
-            onClick={() => setShowOptions(!showOptions)}
-            className="w-full flex items-center justify-between px-4 py-3.5 cursor-pointer hover:bg-neutral-800/40 transition-colors"
+            key={opt.name}
+            onClick={() => {
+
+              setDestination(opt.name);
+
+              setDestinationEn(opt.nameEn);
+
+              setShowDestDropdown(false);
+
+              handleSelectDest(opt);
+
+            }}
+            className="
+              w-full
+              px-4
+              py-3
+              flex
+              items-center
+              gap-3
+              hover:bg-neutral-800
+              transition-all
+              text-left
+            "
           >
-            <div className="flex items-center gap-2">
-              <Sparkles className="h-4 w-4 text-amber-400" />
-              <span className="text-xs font-semibold text-neutral-200">
-                {isAr ? 'خيارات إضافية' : 'Service options'}
-              </span>
+
+            <MapPin className="h-4 w-4 text-neutral-500" />
+
+            <div className="flex-1">
+
+              <p className="text-sm text-white font-medium">
+                {isAr
+                  ? opt.name
+                  : opt.nameEn}
+              </p>
+
+              <p className="text-[11px] text-amber-400 font-mono">
+                {opt.cost} DA
+              </p>
+
             </div>
-            <div className="flex items-center gap-2">
-              {/* Show selected tier label */}
-              <span className="text-[10px] text-amber-400 font-mono font-bold">
-                {serviceTier === 'eco' ? (isAr ? 'اقتصادي' : 'Eco') : serviceTier === 'comfort' ? (isAr ? 'كومفورت' : 'Comfort') : (isAr ? 'VIP' : 'VIP')}
-              </span>
-              <ChevronDown className={`h-4 w-4 text-neutral-500 transition-transform duration-300 ${showOptions ? 'rotate-180' : ''}`} />
-            </div>
+
           </button>
 
-          {showOptions && (
-            <div className="px-3 pb-3 space-y-2 border-t border-neutral-800">
-              {[
-                { key: 'eco', emoji: '🛵', label: isAr ? 'فلاش اقتصادي' : 'Flash Eco', sub: isAr ? 'دراجة سريعة' : 'Fast bike', mult: '1x' },
-                { key: 'comfort', emoji: '🚗', label: isAr ? 'فلاش كومفورت' : 'Flash Comfort', sub: isAr ? 'سيارة مكيفة' : 'AC car', mult: '1.35x' },
-                { key: 'vip', emoji: '👑', label: isAr ? 'فلاش VIP' : 'Flash VIP', sub: isAr ? 'رحلة فاخرة' : 'Luxury ride', mult: '1.85x' },
-              ].map((tier) => (
-                <div
-                  key={tier.key}
-                  onClick={() => handleTierChange(tier.key as 'eco' | 'comfort' | 'vip')}
-                  className={`flex items-center justify-between px-3 py-2.5 rounded-xl border cursor-pointer transition-all mt-2 ${serviceTier === tier.key ? 'bg-amber-400/10 border-amber-400/40' : 'bg-neutral-950 border-neutral-800 hover:border-neutral-700'}`}
-                >
-                  <div className="flex items-center gap-2.5">
-                    <span className="text-lg">{tier.emoji}</span>
-                    <div>
-                      <p className="text-xs font-bold text-neutral-100">{tier.label}</p>
-                      <p className="text-[10px] text-neutral-400">{tier.sub}</p>
-                    </div>
-                  </div>
-                  <span className="text-xs font-mono font-bold text-amber-400">{tier.mult}</span>
-                </div>
-              ))}
-            </div>
-          )}
+      ))}
+
+    </div>
+
+  )}
+
+</div>
+
+
+       
+{/* Delivery Speed Options */}
+<div className="bg-neutral-900 border border-neutral-800 rounded-2xl p-3">
+
+  <div className="flex items-center gap-2 mb-3">
+    <Sparkles className="h-4 w-4 text-amber-400" />
+
+    <span className="text-xs font-bold text-neutral-200">
+      {isAr
+        ? 'نوع التوصيل'
+        : 'Delivery Type'}
+    </span>
+  </div>
+
+  <div className="space-y-2">
+
+    {/* NORMAL */}
+    <div
+      onClick={() => {
+        setServiceTier('eco');
+
+        const selectedDestObj =
+          DESTINATION_LOCATIONS_AR.find(
+            d => d.name === destination
+          );
+
+        const baseCost =
+          selectedDestObj
+            ? selectedDestObj.cost
+            : 25;
+
+        setCost(baseCost);
+      }}
+      className={`
+        flex
+        items-center
+        justify-between
+        px-4
+        py-3
+        rounded-2xl
+        border
+        cursor-pointer
+        transition-all
+        ${
+          serviceTier === 'eco'
+            ? 'border-amber-400/50 bg-amber-400/10'
+            : 'border-neutral-800 bg-neutral-950'
+        }
+      `}
+    >
+
+      <div className="flex items-center gap-3">
+
+        
+<img
+  src="/image/fast-removebg-preview.png"
+  alt="Urgent Delivery"
+  className="
+    w-14
+    h-14
+    object-contain
+    drop-shadow-[0_0_12px_rgba(239,68,68,0.35)]
+  "
+/>
+
+
+
+        <div>
+          <p className="text-sm font-bold text-white">
+            {isAr
+              ? 'توصيل عادي'
+              : 'Normal Delivery'}
+          </p>
+
+          <p className="text-[11px] text-neutral-500">
+            {isAr
+              ? 'توصيل اقتصادي'
+              : 'Affordable ride'}
+          </p>
         </div>
+
+      </div>
+
+      <span className="text-xs font-bold text-amber-400">
+        1x
+      </span>
+
+    </div>
+
+    {/* URGENT */}
+    <div
+      onClick={() => {
+
+        setServiceTier('vip');
+
+        const selectedDestObj =
+          DESTINATION_LOCATIONS_AR.find(
+            d => d.name === destination
+          );
+
+        const baseCost =
+          selectedDestObj
+            ? selectedDestObj.cost
+            : 25;
+
+        setCost(
+          Math.round(baseCost * 1.5)
+        );
+
+      }}
+      className={`
+        flex
+        items-center
+        justify-between
+        px-4
+        py-3
+        rounded-2xl
+        border
+        cursor-pointer
+        transition-all
+        ${
+          serviceTier === 'vip'
+            ? 'border-red-500/50 bg-red-500/10'
+            : 'border-neutral-800 bg-neutral-950'
+        }
+      `}
+    >
+
+      <div className="flex items-center gap-3">
+
+       
+<img
+  src="/image/normal-removebg-preview.png"
+  alt="Normal Delivery"
+  className="
+    w-14
+    h-14
+    object-contain
+    drop-shadow-[0_0_10px_rgba(250,204,21,0.25)]
+  "
+/>
+
+
+        <div>
+          <p className="text-sm font-bold text-white">
+            {isAr
+              ? 'توصيل مستعجل'
+              : 'Urgent Delivery'}
+          </p>
+
+          <p className="text-[11px] text-neutral-500">
+            {isAr
+              ? 'أولوية وسرعة أكبر'
+              : 'Priority fast delivery'}
+          </p>
+        </div>
+
+      </div>
+
+      <span className="text-xs font-bold text-red-400">
+        1.5x
+      </span>
+
+    </div>
+
+  </div>
+
+</div>
+
+
       </div>
 
       {/* CTA Footer */}

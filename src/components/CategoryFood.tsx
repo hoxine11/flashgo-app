@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ArrowLeft, Search, Plus, Minus, ShoppingCart, ArrowRight, Heart, Timer, Star } from 'lucide-react';
-import { FOOD_ITEMS } from '../data/mockData';
+import { GROCERY_ITEMS } from '../data/mockData';
 import { Order, UserProfile, FoodItem } from '../types';
 
 interface CategoryFoodProps {

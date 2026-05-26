@@ -17,7 +17,7 @@ export default function CategoryGrocery({ lang, onBack, onSubmitOrder, user }: C
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedStoreId, setSelectedStoreId] = useState('target'); // Target as default from design
   const [selectedCategory, setSelectedCategory] = useState<string>(isAr ? 'مواد غذائية' : 'Groceries');
-  
+
   // Cart state: Record of item_id -> quantity
   const [cart, setCart] = useState<Record<string, number>>({});
 
@@ -42,20 +42,42 @@ export default function CategoryGrocery({ lang, onBack, onSubmitOrder, user }: C
   };
 
   // Search filter and category filter
+
   const filteredProducts = GROCERY_ITEMS.filter(prod => {
-    const matchesCategory = isAr 
-      ? prod.category === selectedCategory
-      : prod.categoryEn.toLowerCase() === selectedCategory.toLowerCase();
-    
-    if (searchQuery.trim() === '') {
-      return matchesCategory;
-    }
-    
+
     const query = searchQuery.toLowerCase();
-    const nameMatch = prod.name.toLowerCase().includes(query) || prod.nameEn.toLowerCase().includes(query);
-    const storeMatch = activeStore.name.toLowerCase().includes(query) || activeStore.nameEn.toLowerCase().includes(query);
-    return nameMatch || storeMatch;
+
+    const store = STORES.find(
+      s => s.id === prod.storeId
+    );
+
+    const matchesSearch =
+      searchQuery.trim() === '' ||
+
+      prod.name.toLowerCase().includes(query) ||
+      prod.nameEn.toLowerCase().includes(query) ||
+
+      store?.name.toLowerCase().includes(query) ||
+      store?.nameEn.toLowerCase().includes(query);
+
+    const matchesCategory =
+      isAr
+        ? prod.category === selectedCategory
+        : prod.categoryEn.toLowerCase() ===
+        selectedCategory.toLowerCase();
+
+    const matchesStore =
+      prod.storeId === selectedStoreId;
+
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      matchesStore
+    );
+
   });
+
+
 
   // Calculate cart amounts
   const cartItemCount = (Object.values(cart) as number[]).reduce((sum, q) => sum + q, 0);
@@ -96,8 +118,8 @@ export default function CategoryGrocery({ lang, onBack, onSubmitOrder, user }: C
     onSubmitOrder(newOrder);
   };
 
-  const groceryCategories = isAr 
-    ? ['مواد غذائية', 'منظفات', 'عناية شخصية'] 
+  const groceryCategories = isAr
+    ? ['مواد غذائية', 'منظفات', 'عناية شخصية']
     : ['Groceries', 'Detergents', 'Personal Care'];
 
   return (
@@ -121,13 +143,13 @@ export default function CategoryGrocery({ lang, onBack, onSubmitOrder, user }: C
       {/* Main Container */}
       <div className="flex-1 overflow-y-auto pb-24 px-3 space-y-4 pt-2">
         {/* Grocery Banner */}
-<div className="relative mt-3 h-40 w-full rounded-2xl overflow-hidden border border-neutral-800 bg-neutral-950">
+        <div className="relative mt-3 h-40 w-full rounded-2xl overflow-hidden border border-neutral-800 bg-neutral-950">
 
-  {/* Image */}
-  <img
-    src="/image/alimentation.png"
-    alt="Grocery Banner"
-    className="
+          {/* Image */}
+          <img
+            src="/image/alimentation.png"
+            alt="Grocery Banner"
+            className="
       w-full
       h-full
       object-cover
@@ -136,27 +158,27 @@ export default function CategoryGrocery({ lang, onBack, onSubmitOrder, user }: C
       contrast-110
       saturate-110
     "
-  />
+          />
 
-  {/* Overlay */}
-  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
 
-  {/* Text */}
-  <div className="absolute bottom-4 left-4 right-4 z-10">
+          {/* Text */}
+          <div className="absolute bottom-4 left-4 right-4 z-10">
 
-    <h2 className="text-lg font-black text-white drop-shadow-lg">
-      {isAr ? 'تسوق براحتك 🛒' : 'Smart Grocery Shopping 🛒'}
-    </h2>
+            <h2 className="text-lg font-black text-white drop-shadow-lg">
+              {isAr ? 'تسوق براحتك 🛒' : 'Smart Grocery Shopping 🛒'}
+            </h2>
 
-    <p className="text-[11px] text-neutral-200 mt-1">
-      {isAr
-        ? 'نوصل مشترياتك بسرعة حتى لباب دارك'
-        : 'Fast delivery for groceries & essentials'}
-    </p>
+            <p className="text-[11px] text-neutral-200 mt-1">
+              {isAr
+                ? 'نوصل مشترياتك بسرعة حتى لباب دارك'
+                : 'Fast delivery for groceries & essentials'}
+            </p>
 
-  </div>
+          </div>
 
-</div>
+        </div>
         {/* Search Bar matching design */}
         <div className="relative">
           <div className="absolute inset-y-0 right-3 flex items-center pointer-events-none">
@@ -189,20 +211,20 @@ export default function CategoryGrocery({ lang, onBack, onSubmitOrder, user }: C
                 }}
                 className={`flex-shrink-0 flex items-center gap-2.5 px-3.5 py-2.5 rounded-xl border cursor-pointer transition-all ${selectedStoreId === st.id ? 'bg-neutral-900 border-amber-400/80 shadow-md shadow-amber-400/5' : 'bg-neutral-950 border-neutral-850 hover:border-neutral-800'}`}
               >
-               <div className="h-12 w-12 overflow-hidden rounded-xl bg-white flex items-center justify-center">
+                <div className="h-12 w-12 overflow-hidden rounded-xl bg-white flex items-center justify-center">
 
-  <img
-    src={st.logo}
-    alt={st.name}
-    className="
+                  <img
+                    src={st.logo}
+                    alt={st.name}
+                    className="
       w-full
       h-full
       object-cover
      
     "
-  />
+                  />
 
-</div>
+                </div>
                 <div className="flex flex-col text-left">
                   <span className="text-xs font-bold text-neutral-200">{isAr ? st.name : st.nameEn}</span>
                   <span className="text-[9px] text-amber-400 font-medium font-sans">★ {st.rating} • {isAr ? st.deliveryTime : st.deliveryTimeEn}</span>
@@ -247,7 +269,18 @@ export default function CategoryGrocery({ lang, onBack, onSubmitOrder, user }: C
                     <div className="relative">
                       {/* Product Emoji */}
                       <div className="bg-neutral-950 rounded-lg h-20 flex items-center justify-center text-3xl mb-2 border border-neutral-850 group-hover:scale-105 duration-300">
-                        {prod.emoji}
+
+                        <img
+                          src={prod.image}
+                          alt={isAr ? prod.name : prod.nameEn}
+                          className="
+    w-full
+    h-full
+    object-cover
+    rounded-lg
+  "
+                        />
+
                       </div>
                       {/* Badge if item in cart */}
                       {qtyInCart > 0 && (

@@ -1,302 +1,287 @@
-import { Store, GroceryItem, FoodItem, Order, WalletTransaction, UserProfile } from '../types';
 
 export const STORES: Store[] = [
   {
     id: 'carrefour',
     name: 'كارفور',
     nameEn: 'Carrefour',
-    logo: '../image/carrefour.png',
-    rating: 4.5,
-    
+    logo: '/image/carrefour.png',
+    rating: 4.7,
   },
   {
-    id: 'target',
-    name: 'zaki emballage',
-    nameEn: 'zaki emballage',
-    logo: '../image/zaki.png',
+    id: 'zaki',
+    name: 'زكي للتغليف',
+    nameEn: 'Zaki Emballage',
+    logo: '/image/zaki.png',
     rating: 4.8,
-    
   },
   {
-    id: 'marjane',
+    id: 'zara',
     name: 'زارا',
-    nameEn: 'zara',
-    logo: '../image/zara.png',
+    nameEn: 'Zara',
+    logo: '/image/zara.png',
     rating: 4.6,
-    
   }
 ];
 
 export const GROCERY_ITEMS: GroceryItem[] = [
-  // Groceries / مواد غذائية
+
+  // =========================================
+  // CARREFOUR PRODUCTS
+  // =========================================
+
   {
-    id: 'gro_1',
+    id: 'car_1',
     name: 'حليب كامل الدسم',
     nameEn: 'Full Cream Milk',
-    price: 150.00,
+    price: 150,
     category: 'مواد غذائية',
     categoryEn: 'Groceries',
-    unit: '١ لتر',
+    unit: '1L',
     unitEn: '1L',
-    emoji: '🥛'
+    image: '/image/milk.png',
+    storeId: 'carrefour'
   },
+
   {
-    id: 'gro_2',
-    name: 'أرز بسمتي فاخر',
-    nameEn: 'Premium Basmati Rice',
-    price: 900.00,
+    id: 'car_2',
+    name: 'أرز بسمتي',
+    nameEn: 'Basmati Rice',
+    price: 950,
     category: 'مواد غذائية',
     categoryEn: 'Groceries',
-    unit: '٥ كجم',
-    unitEn: '5kg',
-    emoji: '🍚'
+    unit: '5KG',
+    unitEn: '5KG',
+    image: '/image/rice.png',
+    storeId: 'carrefour'
   },
+
   {
-    id: 'gro_3',
-    name: 'زيت دوار الشمس',
-    nameEn: 'Sunflower Oil',
-    price: 400.00,
+    id: 'car_3',
+    name: 'كوكا كولا',
+    nameEn: 'Coca Cola',
+    price: 120,
     category: 'مواد غذائية',
     categoryEn: 'Groceries',
-    unit: '١.٥ لتر',
+    unit: '1L',
+    unitEn: '1L',
+    image: '/image/coca.png',
+    storeId: 'carrefour'
+  },
+
+  {
+    id: 'car_4',
+    name: 'رقائق البطاطس',
+    nameEn: 'Potato Chips',
+    price: 180,
+    category: 'مواد غذائية',
+    categoryEn: 'Groceries',
+    unit: '150g',
+    unitEn: '150g',
+    image: '/image/chips.png',
+    storeId: 'carrefour'
+  },
+
+  {
+    id: 'car_5',
+    name: 'مياه معدنية',
+    nameEn: 'Mineral Water',
+    price: 70,
+    category: 'مواد غذائية',
+    categoryEn: 'Groceries',
+    unit: '1.5L',
     unitEn: '1.5L',
-    emoji: '🍾'
+    image: '/image/water.png',
+    storeId: 'carrefour'
   },
-  // Detergents / منظفات
+
   {
-    id: 'gro_4',
-    name: 'منظف غسيل سائل',
-    nameEn: 'Liquid Detergent',
-    price: 850.00,
+    id: 'car_6',
+    name: 'شوكولاتة',
+    nameEn: 'Chocolate',
+    price: 250,
+    category: 'مواد غذائية',
+    categoryEn: 'Groceries',
+    unit: '100g',
+    unitEn: '100g',
+    image: '/image/choco.png',
+    storeId: 'carrefour'
+  },
+
+  {
+    id: 'car_7',
+    name: 'قهوة',
+    nameEn: 'Coffee',
+    price: 650,
+    category: 'مواد غذائية',
+    categoryEn: 'Groceries',
+    unit: '250g',
+    unitEn: '250g',
+    image: '/image/coffee.png',
+    storeId: 'carrefour'
+  },
+
+  {
+    id: 'car_8',
+    name: 'سكر أبيض',
+    nameEn: 'White Sugar',
+    price: 140,
+    category: 'مواد غذائية',
+    categoryEn: 'Groceries',
+    unit: '1KG',
+    unitEn: '1KG',
+    image: '/image/sugar.png',
+    storeId: 'carrefour'
+  },
+
+  // =========================================
+  // ZARA PRODUCTS
+  // =========================================
+
+  {
+    id: 'zara_1',
+    name: 'حذاء رياضي أبيض',
+    nameEn: 'White Sneakers',
+    price: 8500,
+    category: 'عناية شخصية',
+    categoryEn: 'Personal Care',
+    unit: '42',
+    unitEn: '42',
+    image: '/image/shoes1.png',
+    storeId: 'zara'
+  },
+
+  {
+    id: 'zara_2',
+    name: 'هودي أسود',
+    nameEn: 'Black Hoodie',
+    price: 6200,
+    category: 'عناية شخصية',
+    categoryEn: 'Personal Care',
+    unit: 'XL',
+    unitEn: 'XL',
+    image: '/image/hoodie.png',
+    storeId: 'zara'
+  },
+
+  {
+    id: 'zara_3',
+    name: 'جينز أزرق',
+    nameEn: 'Blue Jeans',
+    price: 7200,
+    category: 'عناية شخصية',
+    categoryEn: 'Personal Care',
+    unit: '32',
+    unitEn: '32',
+    image: '/image/jeans.png',
+    storeId: 'zara'
+  },
+
+  {
+    id: 'zara_4',
+    name: 'تيشيرت أبيض',
+    nameEn: 'White T-Shirt',
+    price: 3200,
+    category: 'عناية شخصية',
+    categoryEn: 'Personal Care',
+    unit: 'L',
+    unitEn: 'L',
+    image: '/image/tshirt.png',
+    storeId: 'zara'
+  },
+
+  {
+    id: 'zara_5',
+    name: 'حقيبة يد',
+    nameEn: 'Hand Bag',
+    price: 9800,
+    category: 'عناية شخصية',
+    categoryEn: 'Personal Care',
+    unit: '1pc',
+    unitEn: '1pc',
+    image: '/image/bag.png',
+    storeId: 'zara'
+  },
+
+  // =========================================
+  // ZAKI EMBALLAGE PRODUCTS
+  // =========================================
+
+  {
+    id: 'zak_1',
+    name: 'كرتون تغليف',
+    nameEn: 'Packaging Box',
+    price: 300,
     category: 'منظفات',
     categoryEn: 'Detergents',
-    unit: '٢.٥ لتر',
-    unitEn: '2.5L',
-    emoji: '🧼'
+    unit: 'Large',
+    unitEn: 'Large',
+    image: '/image/box.png',
+    storeId: 'zaki'
   },
+
   {
-    id: 'gro_5',
-    name: 'سائل غسيل الأطباق',
-    nameEn: 'Dishwashing Liquid',
-    price: 250.00,
+    id: 'zak_2',
+    name: 'ورق فقاعات',
+    nameEn: 'Bubble Wrap',
+    price: 450,
     category: 'منظفات',
     categoryEn: 'Detergents',
-    unit: '١ لتر',
-    unitEn: '1L',
-    emoji: '🧽'
+    unit: '5m',
+    unitEn: '5m',
+    image: '/image/bubble.png',
+    storeId: 'zaki'
   },
-  // Personal Care / عناية شخصية
+
   {
-    id: 'gro_6',
-    name: 'شامبو مغذي للشعر',
-    nameEn: 'Nourishing Shampoo',
-    price: 420.00,
-    category: 'عناية شخصية',
-    categoryEn: 'Personal Care',
-    unit: '٤٠٠ مل',
-    unitEn: '400ml',
-    emoji: '🧴'
+    id: 'zak_3',
+    name: 'شريط لاصق',
+    nameEn: 'Adhesive Tape',
+    price: 120,
+    category: 'منظفات',
+    categoryEn: 'Detergents',
+    unit: '1pc',
+    unitEn: '1pc',
+    image: '/image/tape.png',
+    storeId: 'zaki'
   },
+
   {
-    id: 'gro_7',
-    name: 'معجون أسنان مبيض',
-    nameEn: 'Whitening Toothpaste',
-    price: 300.00,
-    category: 'عناية شخصية',
-    categoryEn: 'Personal Care',
-    unit: '٧٥ مل',
-    unitEn: '75ml',
-    emoji: '🪥'
+    id: 'zak_4',
+    name: 'أكياس تغليف',
+    nameEn: 'Packaging Bags',
+    price: 250,
+    category: 'منظفات',
+    categoryEn: 'Detergents',
+    unit: '20pcs',
+    unitEn: '20pcs',
+    image: '/image/bags.png',
+    storeId: 'zaki'
   },
+
   {
-    id: 'gro_8',
-    name: 'صابون مرطب طبيعي',
-    nameEn: 'Moisturizing Soap',
-    price: 180.00,
-    category: 'عناية شخصية',
-    categoryEn: 'Personal Care',
-    unit: '١٢٥ جم',
-    unitEn: '125g',
-    emoji: '🧼'
+    id: 'zak_5',
+    name: 'ملصقات هش',
+    nameEn: 'Fragile Stickers',
+    price: 180,
+    category: 'منظفات',
+    categoryEn: 'Detergents',
+    unit: '10pcs',
+    unitEn: '10pcs',
+    image: '/image/sticker.png',
+    storeId: 'zaki'
   }
+
 ];
 
-export const FOOD_ITEMS: FoodItem[] = [
-  // Burgers
-  {
-    id: 'food_1',
-    name: 'برجر تشيز برنس كلاسيك',
-    nameEn: 'Cheese Prince Classic Burger',
-    price: 750.00,
-    category: 'burger',
-    rating: 4.8,
-    image: '../image/burgerfood.jpg',
-    description: 'شريحة لحم بقري مشوية على اللهب مع الجبن السويسري المذاب، الخس، البصل والصلصة الخاصة للبرنس.',
-    descriptionEn: 'Flame-grilled premium beef patty served with melted Swiss cheese, fresh lettuce, onion, and special Prince sauce.',
-    restaurantId: 'burger-prince'
-  },
-  {
-    id: 'food_2',
-    name: 'برجر دجاج مقرمش سبايسي',
-    nameEn: 'Spicy Crispy Chicken Burger',
-    price: 680.00,
-    category: 'burger',
-    rating: 4.6,
-    emoji: '🍗',
-    description: 'صدر دجاج مقرمش ومتبل بخلطة حارة، مغطى بصلصة المايونيز والجبن السلايس والخس المقرمش.',
-    descriptionEn: 'Crispy marinated chicken breast in spicy batter, topped with light mayonnaise, sliced cheese, and fresh lettuce.',
-    restaurantId: 'burger-prince'
-  },
-  // Pizza
-  {
-    id: 'food_3',
-    name: 'بيتزا مارغريتا إيطالية',
-    nameEn: 'Italian Margherita Pizza',
-    price: 800.00,
-    category: 'pizza',
-    rating: 4.7,
-    emoji: '🍕',
-    description: 'عجينة بيتزا إيطالية رقيقة مغطاة بصلصة الطماطم الغنية، جبن الموزاريلا الفاخر، رذاذ من زيت الزيتون وريحان طازج.',
-    descriptionEn: 'Thin-crust light Italian pizza dough topped with rich tomato sauce, premium mozzarella, olive oil drizzle, and fresh basil.',
-    restaurantId: 'pizza-house'
-  },
-  {
-    id: 'food_4',
-    name: 'بيتزا سوبر سوبريم بيبيروني',
-    nameEn: 'Super Supreme Pepperoni Pizza',
-    price: 1100.00,
-    category: 'pizza',
-    rating: 4.9,
-    emoji: '🍕',
-    description: 'بيتزا غنية بقطع البيبيروني البقري ولحم المفروم، فلفل أخضر، فطر، زيتون أسود وجبن الموزاريلا السائح.',
-    descriptionEn: 'Loaded pizza topped with beef pepperoni slices, ground beef, green peppers, mushrooms, black olives, and premium mozzarella cheese.',
-    restaurantId: 'pizza-house'
-  },
-  // Grills
-  {
-    id: 'food_5',
-    name: 'كباب مشوي على الفحم',
-    nameEn: 'Charcoal Grilled Kebab',
-    price: 1200.00,
-    category: 'grills',
-    rating: 4.9,
-    emoji: '🍢',
-    description: 'ثلاثة أشياخ من الكباب البلدي بالبهارات الشرقية المشوية على الفحم، تقدم مع الأرز والصلصة الحارة والخضروات المشوية.',
-    descriptionEn: 'Three skewers of spiced premium beef kebab grilled on charcoal coals, served with aromatic rice, spicy chutney, and grilled veggies.',
-    restaurantId: 'traditional-grills'
-  },
-  {
-    id: 'food_6',
-    name: 'شيش طاووق متبل بامتياز',
-    nameEn: 'Marinated Shish Tawook',
-    price: 950.00,
-    category: 'grills',
-    rating: 4.7,
-    emoji: '🍢',
-    description: 'أقراص صدر الدجاج الشهية المتبلة بالثوم والليمون والخل مشوية ببطء، تقدم مع صوص الثومية والخبز اللبناني والبطاطس.',
-    descriptionEn: 'Satisfying cubed tender chicken breasts marinated in garlic, lemon juice, and red spices, slowly grilled and served with garlic dip, bread, and fries.',
-    restaurantId: 'traditional-grills'
-  },
-  // Sweets
-  {
-    id: 'food_7',
-    name: 'تشيز كيك سان سيباستيان',
-    nameEn: 'San Sebastian Cheesecake',
-    price: 550.00,
-    category: 'sweets',
-    rating: 4.8,
-    emoji: '🍰',
-    description: 'قطعة غنية ومحمرة خارجياً، كريمية من الداخل وذات ملمس فائق النعومة، مغطاة بأرقى أنواع الشوكولاتة البلجيكية الساخنة.',
-    descriptionEn: 'Decadent baked crustless cheesecake with a caramelized top and super creamy melt-in-the-mouth center, drizzled with premium Belgian hot chocolate.',
-    restaurantId: 'sweet-palace'
-  },
-  {
-    id: 'food_8',
-    name: 'كنافة نابلسية بالجبن الساخن',
-    nameEn: 'Nabulsi Kunafa with Hot Cheese',
-    price: 450.00,
-    category: 'sweets',
-    rating: 4.9,
-    emoji: '🍯',
-    description: 'كنافة مقرمشة ساخنة ومغطاة بالفستق الحلبي والشيرة، تحتوي بداخلها على طبقة سميكة من جبن العكاوي السائح والمالح المتوازن.',
-    descriptionEn: 'Crispy warm stringy semolina pastry heavily coats in ground pistachios and sweet syrup, containing a thick layer of melted, balanced Akkawi cheese.',
-    restaurantId: 'sweet-palace'
-  }
-];
-
-export const INITIAL_USER: UserProfile = {
-  name: 'أحمد',
-  nameEn: 'Ahmed',
-  phone: '+213 550 12 34 56',
-  email: 'ahmed.delivery@flashgo.com',
-  balance: 5500.00,
-  loyaltyPoints: 1240,
-  language: 'ar',
+export const INITIAL_USER = {
+  id: 'usr_1',
+  name: 'Hocine Baslimane',
+  email: 'hocine@email.com',
+  phone: '+213555000000',
+  walletBalance: 12500,
+  loyaltyPoints: 240,
 };
 
-export const INITIAL_TRANSACTIONS: WalletTransaction[] = [
-  {
-    id: 'tx_1',
-    type: 'incoming',
-    amount: 2500.00,
-    title: 'شحن رصيد المحفظة - الذهبية',
-    titleEn: 'Wallet Recharge - Edahabia Card',
-    date: '٢٠٢٦-٠٥-٢٠',
-  },
-  {
-    id: 'tx_2',
-    type: 'outgoing',
-    amount: 750.00,
-    title: 'طلب توصيل الأكل #FG-9382',
-    titleEn: 'Food Delivery Order #FG-9382',
-    date: '٢٠٢٦-٠٥-١٩',
-  },
-  {
-    id: 'tx_3',
-    type: 'outgoing',
-    amount: 400.00,
-    title: 'رحلة توصيل مشوار #FG-8219',
-    titleEn: 'Ride Hailing Trip #FG-8219',
-    date: '٢0٢6-05-18',
-  },
-  {
-    id: 'tx_4',
-    type: 'incoming',
-    amount: 500.00,
-    title: 'هدية مكافأة الولاء',
-    titleEn: 'Loyalty Reward Gift',
-    date: '٢٠٢٦-٠٥-١٥',
-  }
-];
+export const INITIAL_ORDERS = [];
 
-export const INITIAL_ORDERS: Order[] = [
-  {
-    id: 'FG-9382',
-    category: 'food',
-    status: 'delivered',
-    pickupAddress: 'مطعم برجر برينس - ديدوش مراد',
-    pickupAddressEn: 'Burger Prince - Didouche Mourad',
-    deliveryAddress: 'ساحة أودان - الجزائر الوسطى',
-    deliveryAddressEn: 'Audin Square - Algiers Center',
-    cost: 750.00,
-    date: '٢٠٢٦-٠5-١٩',
-    storeName: 'برجر برينس',
-    storeNameEn: 'Burger Prince',
-    progress: 100,
-    items: [
-      { id: 'food_1', name: 'برجر تشيز برنس كلاسيك', nameEn: 'Cheese Prince Classic Burger', price: 750, quantity: 1 }
-    ]
-  },
-  {
-    id: 'FG-8219',
-    category: 'ride',
-    status: 'delivered',
-    pickupAddress: 'مطار هواري بومدين الدولي',
-    pickupAddressEn: 'Houari Boumediene International Airport',
-    deliveryAddress: 'حي حيدرة - ساحة القدس',
-    deliveryAddressEn: 'Hydra District - Jerusalem Square',
-    cost: 400.00,
-    date: '٢٠٢٦-٠٥-١٨',
-    progress: 100,
-  }
-];
+export const INITIAL_TRANSACTIONS = [];
