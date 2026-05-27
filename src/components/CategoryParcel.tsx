@@ -1,5 +1,17 @@
 import { useState } from 'react';
-import { ArrowLeft, MapPin, Sparkles, Check, Package, Weight, HelpCircle } from 'lucide-react';
+
+import {
+  ArrowLeft,
+  MapPin,
+  Sparkles,
+  Check,
+  Package,
+  Weight,
+  HelpCircle,
+  Camera,
+  Upload,
+} from 'lucide-react';
+
 import { Order, UserProfile } from '../types';
 
 interface CategoryParcelProps {
@@ -9,7 +21,7 @@ interface CategoryParcelProps {
   user: UserProfile;
 }
 
-const PARCEL_TYPES = [ { id: 'document', name: 'وثائق ومستندات', nameEn: 'Documents & Papers', image: '../image/image.jpg', cost: 150, }, { id: 'box', name: 'صندوق أو كرتون طرد', nameEn: 'Regular Box/Parcel', image: '../image/torod.png', cost: 250, }, { id: 'fragile', name: 'مواد قابلة للكسر', nameEn: 'Fragile Glassware/Device', image: '../image/vers.png', cost: 350, }, { id: 'food', name: 'مأكولات جاهزة مجمدة', nameEn: 'Food/Meal Shipment', image: '../image/glasson.jpg', cost: 200, }, ];
+const PARCEL_TYPES = [{ id: 'document', name: 'وثائق ومستندات', nameEn: 'Documents & Papers', image: '../image/image.jpg', cost: 150, }, { id: 'box', name: 'صندوق أو كرتون طرد', nameEn: 'Regular Box/Parcel', image: '../image/torod.png', cost: 250, }, { id: 'fragile', name: 'مواد قابلة للكسر', nameEn: 'Fragile Glassware/Device', image: '../image/vers.png', cost: 350, }, { id: 'food', name: 'مأكولات جاهزة مجمدة', nameEn: 'Food/Meal Shipment', image: '../image/glasson.jpg', cost: 200, },];
 
 
 export default function CategoryParcel({ lang, onBack, onSubmitOrder, user }: CategoryParcelProps) {
@@ -21,6 +33,10 @@ export default function CategoryParcel({ lang, onBack, onSubmitOrder, user }: Ca
   const [parcelType, setParcelType] = useState('box');
   const [weight, setWeight] = useState(2); // standard 2kg
   const [notes, setNotes] = useState('');
+
+  const [parcelPhoto, setParcelPhoto] =
+    useState<string | null>(null);
+
 
   const [pickupFocused, setPickupFocused] = useState(false);
   const [deliveryFocused, setDeliveryFocused] = useState(false);
@@ -36,6 +52,21 @@ export default function CategoryParcel({ lang, onBack, onSubmitOrder, user }: Ca
   };
 
   const cost = calculatePrice();
+
+  const handlePhotoUpload = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    const imageUrl =
+      URL.createObjectURL(file);
+
+    setParcelPhoto(imageUrl);
+  };
+
 
   const handleOrder = () => {
     if (!pickupAddr || !deliveryAddr) {
@@ -80,14 +111,14 @@ export default function CategoryParcel({ lang, onBack, onSubmitOrder, user }: Ca
         {/* Animated Cargo Box Illustration */}
         <div className="mt-2 h-36 rounded-2xl border border-neutral-800 relative overflow-hidden bg-neutral-950">
 
-  {/* Background */}
-  <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-black to-neutral-950"></div>
+          {/* Background */}
+          <div className="absolute inset-0 bg-gradient-to-br from-neutral-900 via-black to-neutral-950"></div>
 
-  {/* Image */}
-  <img
-    src="/image/torod.png"
-    alt="Parcel Box"
-    className="
+          {/* Image */}
+          <img
+            src="/image/torod.png"
+            alt="Parcel Box"
+            className="
       w-full
       h-full
       object-contain
@@ -97,18 +128,18 @@ export default function CategoryParcel({ lang, onBack, onSubmitOrder, user }: Ca
       contrast-110
       saturate-105
     "
-  />
+          />
 
-  {/* Overlay */}
-  <div className="absolute inset-0 bg-black/10 pointer-events-none"></div>
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-black/10 pointer-events-none"></div>
 
-  {/* Top indicators */}
-  <div className="absolute top-2 right-2 flex gap-1 z-10">
-    <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse"></span>
-    <span className="h-1.5 w-1.5 rounded-full bg-amber-300"></span>
-  </div>
+          {/* Top indicators */}
+          <div className="absolute top-2 right-2 flex gap-1 z-10">
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+            <span className="h-1.5 w-1.5 rounded-full bg-amber-300"></span>
+          </div>
 
-</div>
+        </div>
 
         {/* Form addresses inputs */}
         <div className="space-y-3">
@@ -131,7 +162,7 @@ export default function CategoryParcel({ lang, onBack, onSubmitOrder, user }: Ca
             </div>
             {/* Presets buttons */}
             <div className="flex gap-2 mt-2">
-              <button 
+              <button
                 onClick={() => setPickupAddr(isAr ? 'برج المملكة - العليا' : 'Kingdom Center Tower, Al Olaya')}
                 className="text-[9px] bg-neutral-950 px-2 py-1 text-amber-400 border border-neutral-800 rounded hover:bg-neutral-800/20 active:scale-95 transition-transform"
               >
@@ -159,13 +190,13 @@ export default function CategoryParcel({ lang, onBack, onSubmitOrder, user }: Ca
             </div>
             {/* Presets */}
             <div className="flex gap-2 mt-1.5">
-              <button 
+              <button
                 onClick={() => setDeliveryAddr(isAr ? 'مكتب البريد المركزي، الجزائر وسط' : 'Grande Poste, Algiers Center')}
                 className="text-[9px] bg-neutral-950 px-2 py-0.5 text-neutral-400 border border-neutral-800 rounded hover:bg-neutral-800/20 transition-all font-mono"
               >
                 + {isAr ? 'البريد المركزي' : 'Grande Poste'}
               </button>
-              <button 
+              <button
                 onClick={() => setDeliveryAddr(isAr ? 'مستشفى مصطفى باشا الجامعي' : 'Mustapha Pacha Hospital')}
                 className="text-[9px] bg-neutral-950 px-2 py-0.5 text-neutral-400 border border-neutral-800 rounded hover:bg-neutral-800/20 transition-all font-mono"
               >
@@ -201,6 +232,106 @@ export default function CategoryParcel({ lang, onBack, onSubmitOrder, user }: Ca
             ))}
           </div>
 
+          {/* Parcel Photo Upload */}
+
+          <div className="space-y-2">
+
+            <div className="flex items-center gap-2 text-xs font-semibold">
+
+              <Camera className="h-4 w-4 text-amber-400" />
+
+              <span>
+                {isAr
+                  ? 'صورة الطرد'
+                  : 'Parcel Photo'}
+              </span>
+
+            </div>
+
+            <label
+              className="
+      border-2
+      border-dashed
+      border-neutral-700
+      hover:border-amber-400/50
+      rounded-2xl
+      p-4
+      flex
+      flex-col
+      items-center
+      justify-center
+      gap-3
+      bg-neutral-950
+      cursor-pointer
+      transition-all
+    "
+            >
+
+              {parcelPhoto ? (
+
+                <img
+                  src={parcelPhoto}
+                  alt="Parcel"
+                  className="
+          w-full
+          h-40
+          object-cover
+          rounded-xl
+        "
+                />
+
+              ) : (
+
+                <>
+                  <div
+                    className="
+            w-14
+            h-14
+            rounded-full
+            bg-amber-400/10
+            flex
+            items-center
+            justify-center
+          "
+                  >
+                    <Upload className="h-6 w-6 text-amber-400" />
+                  </div>
+
+                  <div className="text-center">
+
+                    <p className="text-sm font-bold text-white">
+
+                      {isAr
+                        ? 'التقط أو ارفع صورة للطرد'
+                        : 'Take or Upload Parcel Photo'}
+
+                    </p>
+
+                    <p className="text-[10px] text-neutral-500 mt-1">
+
+                      {isAr
+                        ? 'لضمان سلامة عملية التوصيل'
+                        : 'Helps drivers identify your shipment'}
+
+                    </p>
+
+                  </div>
+                </>
+
+              )}
+
+              <input
+                type="file"
+                accept="image/*"
+                capture="environment"
+                onChange={handlePhotoUpload}
+                className="hidden"
+              />
+
+            </label>
+
+          </div>
+
           {/* Weight slider with custom indicator */}
           <div className="space-y-2 pt-2">
             <div className="flex items-center justify-between text-xs text-neutral-400">
@@ -210,7 +341,7 @@ export default function CategoryParcel({ lang, onBack, onSubmitOrder, user }: Ca
               </div>
               <span className="font-bold text-amber-400 font-mono">{weight} {isAr ? 'كجم' : 'kg'}</span>
             </div>
-            
+
             <input
               type="range"
               min="1"

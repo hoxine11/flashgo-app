@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { Mail, Lock, Eye, EyeOff, ArrowRight, ArrowLeft, Zap } from 'lucide-react';
-import { motion } from 'motion/react';
 
+
+import { motion, AnimatePresence } from 'framer-motion';
+
+ 
 interface CustomerLoginProps {
   lang: 'ar' | 'en';
   onLoginSuccess: (email: string) => void;

@@ -285,3 +285,56 @@ export const INITIAL_USER = {
 export const INITIAL_ORDERS = [];
 
 export const INITIAL_TRANSACTIONS = [];
+export const FOOD_ITEMS = [
+  {
+    id: 'food_1',
+    name: 'بيتزا مارغريتا',
+    nameEn: 'Pizza Margherita',
+    price: 1200,
+    category: 'مطاعم',
+    categoryEn: 'Restaurant',
+    unit: '1pc',
+    unitEn: '1pc',
+    image: '/image/pizza.png',
+    storeId: 'restaurant_1',
+  },
+
+  {
+    id: 'food_2',
+    name: 'برغر دجاج',
+    nameEn: 'Chicken Burger',
+    price: 950,
+    category: 'مطاعم',
+    categoryEn: 'Restaurant',
+    unit: '1pc',
+    unitEn: '1pc',
+    image: '/image/burger.png',
+    storeId: 'restaurant_1',
+  },
+
+  {
+    id: 'food_3',
+    name: 'تاكوس',
+    nameEn: 'Tacos',
+    price: 850,
+    category: 'مطاعم',
+    categoryEn: 'Restaurant',
+    unit: '1pc',
+    unitEn: '1pc',
+    image: '/image/tacos.png',
+    storeId: 'restaurant_2',
+  },
+
+  {
+    id: 'food_4',
+    name: 'دجاج مقلي',
+    nameEn: 'Fried Chicken',
+    price: 1400,
+    category: 'مطاعم',
+    categoryEn: 'Restaurant',
+    unit: '1pc',
+    unitEn: '1pc',
+    image: '/image/chicken.png',
+    storeId: 'restaurant_2',
+  },
+];

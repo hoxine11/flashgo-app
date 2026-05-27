@@ -31,6 +31,8 @@ import CaptainLogin from './auth/CaptainLogin';
 import CaptainRegister from './auth/CaptainRegister';
 
 import WaitingApproval from './auth/WaitingApproval';
+import ChooseAccountType from './auth/ChooseAccountType';
+
 
 // Captain Components
 import CaptainDashboard from './captain/CaptainDashboard';
@@ -79,19 +81,25 @@ export default function PhoneSimulator({
   // ROLE & AUTH STATES
   // =========================
 
- const [currentRole, setCurrentRole] =
-  useState<'customer' | 'captain' | null>(null);
+  const [currentRole, setCurrentRole] =
+    useState<'customer' | 'captain' | null>(null);
 
-const [authState, setAuthState] =
-  useState<
-    | 'welcome'
-    | 'customer-login'
-    | 'customer-register'
-    | 'captain-login'
-    | 'captain-register'
-    | 'captain-waiting'
-    | 'authenticated'
-  >('welcome');
+
+  const [authState, setAuthState] =
+    useState<
+      | 'welcome'
+      | 'choose-role'
+      | 'customer-login'
+      | 'customer-register'
+      | 'captain-login'
+      | 'captain-register'
+      | 'captain-waiting'
+      | 'company-auth'
+      | 'store-auth'
+      | 'authenticated'
+    >('welcome');
+
+
 
   // =========================
   // CUSTOMER STATES
@@ -219,7 +227,7 @@ const [authState, setAuthState] =
     // =========================
 
     if (
-      authState === 'welcome' 
+      authState === 'welcome'
     ) {
       return (
         <div className="w-full max-w-lg mx-auto p-6 text-center space-y-6">
@@ -247,45 +255,27 @@ const [authState, setAuthState] =
           </div>
 
           {/* Roles */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-            {/* Customer */}
-            <button
-              onClick={() =>
-                setAuthState(
-                  'customer-register'
-                )
-              }
-              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-6 hover:border-amber-400/40 transition-all"
-            >
-              <User className="mx-auto h-8 w-8 text-amber-400" />
+          <button
+            onClick={() =>
+              setAuthState('choose-role')
+            }
+            className="
+    w-full
+    bg-amber-400
+    hover:bg-amber-500
+    text-black
+    font-black
+    py-4
+    rounded-2xl
+    transition-all
+  "
+          >
+            {isAr
+              ? 'ابدأ الآن'
+              : 'Get Started'}
+          </button>
 
-              <h3 className="font-black mt-4">
-                {isAr
-                  ? 'حساب زبون'
-                  : 'Customer'}
-              </h3>
-            </button>
-
-            {/* Captain */}
-            <button
-              onClick={() =>
-                setAuthState(
-                  'captain-register'
-                )
-              }
-              className="bg-neutral-900 border border-neutral-800 rounded-3xl p-6 hover:border-amber-400/40 transition-all"
-            >
-              <Bike className="mx-auto h-8 w-8 text-amber-400" />
-
-              <h3 className="font-black mt-4">
-                {isAr
-                  ? 'كابتن'
-                  : 'Captain'}
-              </h3>
-            </button>
-
-          </div>
 
           {/* Login */}
           <div className="flex justify-center gap-4 text-sm">
@@ -312,8 +302,8 @@ const [authState, setAuthState] =
               className="text-neutral-400 hover:text-amber-400"
             >
               {isAr
-                ? 'دخول الكابتن'
-                : 'Captain Login'}
+                ? 'دخول عامل التوصيل'
+                : 'Driver Login'}
             </button>
 
           </div>
@@ -325,14 +315,64 @@ const [authState, setAuthState] =
     // CUSTOMER LOGIN
     // =========================
 
-   if (authState === 'customer-login') {
+
+    if (authState === 'choose-role') {
+  return (
+    <ChooseAccountType
+      lang={lang}
+
+      onBack={() =>
+        setAuthState('welcome')
+      }
+
+      onSelect={(type) => {
+
+        if (type === 'customer') {
+
+          setCurrentRole('customer');
+
+          setAuthState('customer-login');
+
+        }
+
+        else if (type === 'driver') {
+
+          setCurrentRole('captain');
+
+          setAuthState('captain-login');
+
+        }
+
+        else if (type === 'company') {
+
+          setAuthState('company-auth');
+
+        }
+
+        else if (type === 'store') {
+
+          setAuthState('store-auth');
+
+        }
+
+      }}
+    />
+  );
+}
+
+
+
+if (authState === 'customer-login') {
   return (
     <CustomerLogin
       lang={lang}
 
       onLoginSuccess={() => {
+
         setCurrentRole('customer');
+
         setAuthState('authenticated');
+
       }}
 
       onSwitchToRegister={() =>
@@ -340,112 +380,113 @@ const [authState, setAuthState] =
       }
 
       onBackToRoleSelection={() =>
-        setAuthState('welcome')
+        setAuthState('choose-role')
       }
     />
   );
 }
+
 
     // =========================
     // CUSTOMER REGISTER
     // =========================
 
     if (authState === 'customer-register') {
-  return (
-    <CustomerRegister
-      lang={lang}
+      return (
+        <CustomerRegister
+          lang={lang}
 
-      onRegisterSuccess={() => {
-        setCurrentRole('customer');
-        setAuthState('authenticated');
-      }}
+          onRegisterSuccess={() => {
+            setCurrentRole('customer');
+            setAuthState('authenticated');
+          }}
 
-      onSwitchToLogin={() =>
-        setAuthState('customer-login')
-      }
+          onSwitchToLogin={() =>
+            setAuthState('customer-login')
+          }
 
-      onBackToRoleSelection={() =>
-        setAuthState('welcome')
-      }
-    />
-  );
-}
+          onBackToRoleSelection={() =>
+            setAuthState('welcome')
+          }
+        />
+      );
+    }
 
     // =========================
     // CAPTAIN LOGIN
     // =========================
 
     if (authState === 'captain-login') {
-  return (
-    <CaptainLogin
-      lang={lang}
+      return (
+        <CaptainLogin
+          lang={lang}
 
-      onLoginSuccess={() => {
-        setCurrentRole('captain');
-        setAuthState('authenticated');
-      }}
+          onLoginSuccess={() => {
+            setCurrentRole('captain');
+            setAuthState('authenticated');
+          }}
 
-      onSwitchToRegister={() =>
-        setAuthState('captain-register')
-      }
+          onSwitchToRegister={() =>
+            setAuthState('captain-register')
+          }
 
-      onBackToRoleSelection={() =>
-        setAuthState('welcome')
-      }
-    />
-  );
-}
+          onBackToRoleSelection={() =>
+            setAuthState('welcome')
+          }
+        />
+      );
+    }
 
     // =========================
     // CAPTAIN REGISTER
     // =========================
 
-   if (authState === 'captain-register') {
-  return (
-    <CaptainRegister
-      lang={lang}
+    if (authState === 'captain-register') {
+      return (
+        <CaptainRegister
+          lang={lang}
 
-      onRegisterSuccess={(data) => {
+          onRegisterSuccess={(data) => {
 
-        setCaptainData(data);
+            setCaptainData(data);
 
-        setAuthState('captain-waiting');
-      }}
+            setAuthState('captain-waiting');
+          }}
 
-      onSwitchToLogin={() =>
-        setAuthState('captain-login')
-      }
+          onSwitchToLogin={() =>
+            setAuthState('captain-login')
+          }
 
-      onBackToRoleSelection={() =>
-        setAuthState('welcome')
-      }
-    />
-  );
-}
+          onBackToRoleSelection={() =>
+            setAuthState('welcome')
+          }
+        />
+      );
+    }
 
     // =========================
     // WAITING APPROVAL
     // =========================
 
-   if (authState === 'captain-waiting') {
-  return (
-    <WaitingApproval
-      lang={lang}
-      captainData={captainData}
+    if (authState === 'captain-waiting') {
+      return (
+        <WaitingApproval
+          lang={lang}
+          captainData={captainData}
 
-      onInstantApprove={() => {
+          onInstantApprove={() => {
 
-        setCurrentRole('captain');
+            setCurrentRole('captain');
 
-        setAuthState('authenticated');
-      }}
+            setAuthState('authenticated');
+          }}
 
-      onBackToLogin={() =>
-        setAuthState('captain-login')
-      }
-    />
-  );
-}
+          onBackToLogin={() =>
+            setAuthState('captain-login')
+          }
+        />
+      );
+    }
 
     // =========================
     // AUTHENTICATED
@@ -606,7 +647,7 @@ const [authState, setAuthState] =
             <AppOrders
               lang={lang}
               orders={orders}
-              onCancelOrder={() => {}}
+              onCancelOrder={() => { }}
             />
           );
 
@@ -618,7 +659,7 @@ const [authState, setAuthState] =
                 transactions
               }
               user={user}
-              onAddFunds={() => {}}
+              onAddFunds={() => { }}
             />
           );
 
@@ -627,7 +668,7 @@ const [authState, setAuthState] =
             <AppAccount
               lang={lang}
               user={user}
-              onUpdateUser={() => {}}
+              onUpdateUser={() => { }}
               setLang={setLang}
             />
           );
@@ -666,24 +707,24 @@ const [authState, setAuthState] =
           {/* Switch Role */}
           {authState ===
             'authenticated' && (
-            <button
-              onClick={() => {
-                setCurrentRole(
-                  currentRole ===
-                    'customer'
-                    ? 'captain'
-                    : 'customer'
-                );
-              }}
-              className="bg-neutral-800 text-amber-400 px-3 py-2 rounded-xl text-xs font-black"
-            >
-              ♻️
-              {currentRole ===
-              'customer'
-                ? 'Driver'
-                : 'Client'}
-            </button>
-          )}
+              <button
+                onClick={() => {
+                  setCurrentRole(
+                    currentRole ===
+                      'customer'
+                      ? 'captain'
+                      : 'customer'
+                  );
+                }}
+                className="bg-neutral-800 text-amber-400 px-3 py-2 rounded-xl text-xs font-black"
+              >
+                ♻️
+                {currentRole ===
+                  'customer'
+                  ? 'Driver'
+                  : 'Client'}
+              </button>
+            )}
 
           {/* Language */}
           <button
@@ -741,108 +782,104 @@ const [authState, setAuthState] =
       {authState === 'authenticated' &&
         currentRole === 'customer' && (
 
-        <div className="md:hidden bg-neutral-900/95 sticky bottom-0 border-t border-neutral-800 h-16 flex items-center justify-between px-4 z-40 pb-2 rounded-t-2xl">
+          <div className="md:hidden bg-neutral-900/95 sticky bottom-0 border-t border-neutral-800 h-16 flex items-center justify-between px-4 z-40 pb-2 rounded-t-2xl">
 
-          {/* HOME */}
-          <button
-            onClick={() => {
-              setActiveTab('home');
-              setShowDirectOrderDrawer(false);
-            }}
-            className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${
-              activeTab === 'home'
-                ? 'text-amber-400 scale-105'
-                : 'text-neutral-500'
-            }`}
-          >
-            <Home className="h-5 w-5" />
-
-            <span className="text-[9px] font-bold mt-1">
-              {isAr ? 'الرئيسية' : 'Home'}
-            </span>
-          </button>
-
-          {/* ORDERS */}
-          <button
-            onClick={() => {
-              setActiveTab('orders');
-              setShowDirectOrderDrawer(false);
-            }}
-            className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${
-              activeTab === 'orders'
-                ? 'text-amber-400 scale-105'
-                : 'text-neutral-500'
-            }`}
-          >
-            <Calendar className="h-5 w-5" />
-
-            <span className="text-[9px] font-bold mt-1">
-              {isAr ? 'طلباتي' : 'Orders'}
-            </span>
-          </button>
-
-          {/* CENTER BUTTON */}
-          <div className="flex-1 flex flex-col items-center justify-center relative">
-
+            {/* HOME */}
             <button
               onClick={() => {
-                setShowDirectOrderDrawer(
-                  !showDirectOrderDrawer
-                );
+                setActiveTab('home');
+                setShowDirectOrderDrawer(false);
               }}
-              className="absolute -top-6 w-14 h-14 bg-amber-400 text-black rounded-full flex items-center justify-center shadow-lg shadow-amber-400/25 border-4 border-neutral-950"
+              className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${activeTab === 'home'
+                ? 'text-amber-400 scale-105'
+                : 'text-neutral-500'
+                }`}
             >
-              <Bike className="h-6 w-6 stroke-[2.5]" />
+              <Home className="h-5 w-5" />
+
+              <span className="text-[9px] font-bold mt-1">
+                {isAr ? 'الرئيسية' : 'Home'}
+              </span>
             </button>
 
-            <span className="text-[9px] font-bold text-amber-400 mt-8">
-              {isAr ? 'اطلب الآن' : 'Order'}
-            </span>
+            {/* ORDERS */}
+            <button
+              onClick={() => {
+                setActiveTab('orders');
+                setShowDirectOrderDrawer(false);
+              }}
+              className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${activeTab === 'orders'
+                ? 'text-amber-400 scale-105'
+                : 'text-neutral-500'
+                }`}
+            >
+              <Calendar className="h-5 w-5" />
+
+              <span className="text-[9px] font-bold mt-1">
+                {isAr ? 'طلباتي' : 'Orders'}
+              </span>
+            </button>
+
+            {/* CENTER BUTTON */}
+            <div className="flex-1 flex flex-col items-center justify-center relative">
+
+              <button
+                onClick={() => {
+                  setShowDirectOrderDrawer(
+                    !showDirectOrderDrawer
+                  );
+                }}
+                className="absolute -top-6 w-14 h-14 bg-amber-400 text-black rounded-full flex items-center justify-center shadow-lg shadow-amber-400/25 border-4 border-neutral-950"
+              >
+                <Bike className="h-6 w-6 stroke-[2.5]" />
+              </button>
+
+              <span className="text-[9px] font-bold text-amber-400 mt-8">
+                {isAr ? 'اطلب الآن' : 'Order'}
+              </span>
+
+            </div>
+
+            {/* WALLET */}
+            <button
+              onClick={() => {
+                setActiveTab('wallet');
+                setShowDirectOrderDrawer(false);
+              }}
+              className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${activeTab === 'wallet'
+                ? 'text-amber-400 scale-105'
+                : 'text-neutral-500'
+                }`}
+            >
+              <Wallet className="h-5 w-5" />
+
+              <span className="text-[9px] font-bold mt-1">
+                {isAr ? 'المحفظة' : 'Wallet'}
+              </span>
+            </button>
+
+            {/* ACCOUNT */}
+            <button
+              onClick={() => {
+                setActiveTab('account');
+                setShowDirectOrderDrawer(false);
+              }}
+              className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${activeTab === 'account'
+                ? 'text-amber-400 scale-105'
+                : 'text-neutral-500'
+                }`}
+            >
+              <User className="h-5 w-5" />
+
+              <span className="text-[9px] font-bold mt-1">
+                {isAr ? 'الحساب' : 'Account'}
+              </span>
+            </button>
 
           </div>
+        )}
 
-          {/* WALLET */}
-          <button
-            onClick={() => {
-              setActiveTab('wallet');
-              setShowDirectOrderDrawer(false);
-            }}
-            className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${
-              activeTab === 'wallet'
-                ? 'text-amber-400 scale-105'
-                : 'text-neutral-500'
-            }`}
-          >
-            <Wallet className="h-5 w-5" />
 
-            <span className="text-[9px] font-bold mt-1">
-              {isAr ? 'المحفظة' : 'Wallet'}
-            </span>
-          </button>
-
-          {/* ACCOUNT */}
-          <button
-            onClick={() => {
-              setActiveTab('account');
-              setShowDirectOrderDrawer(false);
-            }}
-            className={`flex flex-col items-center justify-center flex-1 py-1 transition-all ${
-              activeTab === 'account'
-                ? 'text-amber-400 scale-105'
-                : 'text-neutral-500'
-            }`}
-          >
-            <User className="h-5 w-5" />
-
-            <span className="text-[9px] font-bold mt-1">
-              {isAr ? 'الحساب' : 'Account'}
-            </span>
-          </button>
-
-        </div>
-      )}
-
-      
     </div>
   );
 }
