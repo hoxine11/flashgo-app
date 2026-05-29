@@ -104,28 +104,7 @@ export default function ChooseAccountType({
 
         {/* HEADER */}
 
-        <div className="flex items-center mb-8">
-
-          <button
-            onClick={onBack}
-            className="
-              w-10
-              h-10
-              rounded-full
-              bg-neutral-900
-              border
-              border-neutral-800
-              flex
-              items-center
-              justify-center
-              hover:border-amber-400
-              transition-all
-            "
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </button>
-
-        </div>
+        
 
         {/* TITLE */}
 

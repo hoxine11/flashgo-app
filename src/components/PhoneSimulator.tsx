@@ -1,3 +1,4 @@
+// PhoneSimulator.tsx
 import React, { useState, useEffect } from 'react';
 import {
   Home,
@@ -26,14 +27,14 @@ import AppAccount from './AppAccount';
 // Auth Components
 import CustomerLogin from './auth/CustomerLogin';
 import CustomerRegister from './auth/CustomerRegister';
-
+import CompanyAuth from './auth/CompanyAuth';
+import StoreAuth from './auth/StoreAuth';
 import CaptainLogin from './auth/CaptainLogin';
 import CaptainRegister from './auth/CaptainRegister';
-
+import BusinessTypeSelection from './auth/BusinessTypeSelection';
 import WaitingApproval from './auth/WaitingApproval';
 import ChooseAccountType from './auth/ChooseAccountType';
-
-
+import BusinessVerification from './auth/BusinessVerification';
 // Captain Components
 import CaptainDashboard from './captain/CaptainDashboard';
 import CaptainOrders from './captain/CaptainOrders';
@@ -84,22 +85,25 @@ export default function PhoneSimulator({
   const [currentRole, setCurrentRole] =
     useState<'customer' | 'captain' | null>(null);
 
-
+  // ✅ Starts at 'choose-role' directly — splash screen handles 'welcome'
   const [authState, setAuthState] =
     useState<
-      | 'welcome'
       | 'choose-role'
       | 'customer-login'
       | 'customer-register'
       | 'captain-login'
       | 'captain-register'
       | 'captain-waiting'
-      | 'company-auth'
-      | 'store-auth'
+      | 'company-login'
+      | 'company-register'
+      | 'business-type'
+      | 'business-verification'
+      | 'store-login'
+      | 'business-verification'
+      | 'waiting-approval'
+      | 'store-register'
       | 'authenticated'
-    >('welcome');
-
-
+    >('choose-role');
 
   // =========================
   // CUSTOMER STATES
@@ -141,12 +145,12 @@ export default function PhoneSimulator({
     });
 
   // =========================
-  // LOGOUT
+  // LOGOUT — goes back to choose-role
   // =========================
 
   const handleLogout = () => {
     setCurrentRole(null);
-    setAuthState('welcome');
+    setAuthState('choose-role');
   };
 
   // =========================
@@ -222,92 +226,30 @@ export default function PhoneSimulator({
   // =========================
 
   const renderContent = () => {
+
     // =========================
-    // WELCOME SCREEN
+    // CHOOSE ROLE
     // =========================
 
-    if (
-      authState === 'welcome'
-    ) {
+    if (authState === 'choose-role') {
       return (
-        <div className="w-full max-w-lg mx-auto p-6 text-center space-y-6">
-
-          {/* Logo */}
-          <div className="flex flex-col items-center">
-
-            <div className="bg-gradient-to-tr from-amber-400 to-yellow-300 text-black p-4 rounded-3xl shadow-xl">
-              <Bike className="h-10 w-10" />
-            </div>
-
-            <h1 className="text-4xl font-black italic mt-4">
-              Flash
-              <span className="text-amber-400">
-                Go
-              </span>
-            </h1>
-
-            <p className="text-neutral-500 text-sm mt-2">
-              {isAr
-                ? 'منصة التوصيل الأسرع'
-                : 'Premium Delivery Platform'}
-            </p>
-
-          </div>
-
-          {/* Roles */}
-
-          <button
-            onClick={() =>
-              setAuthState('choose-role')
+        <ChooseAccountType
+          lang={lang}
+          onBack={() => setAuthState('choose-role')} // no-op, splash is gone
+          onSelect={(type) => {
+            if (type === 'customer') {
+              setCurrentRole('customer');
+              setAuthState('customer-login');
+            } else if (type === 'driver') {
+              setCurrentRole('captain');
+              setAuthState('captain-login');
+            } else if (type === 'company') {
+              setAuthState('company-login');
+            } else if (type === 'store') {
+              setAuthState('store-login');
             }
-            className="
-    w-full
-    bg-amber-400
-    hover:bg-amber-500
-    text-black
-    font-black
-    py-4
-    rounded-2xl
-    transition-all
-  "
-          >
-            {isAr
-              ? 'ابدأ الآن'
-              : 'Get Started'}
-          </button>
-
-
-          {/* Login */}
-          <div className="flex justify-center gap-4 text-sm">
-
-            <button
-              onClick={() =>
-                setAuthState(
-                  'customer-login'
-                )
-              }
-              className="text-neutral-400 hover:text-amber-400"
-            >
-              {isAr
-                ? 'دخول الزبون'
-                : 'Customer Login'}
-            </button>
-
-            <button
-              onClick={() =>
-                setAuthState(
-                  'captain-login'
-                )
-              }
-              className="text-neutral-400 hover:text-amber-400"
-            >
-              {isAr
-                ? 'دخول عامل التوصيل'
-                : 'Driver Login'}
-            </button>
-
-          </div>
-        </div>
+          }}
+        />
       );
     }
 
@@ -315,77 +257,23 @@ export default function PhoneSimulator({
     // CUSTOMER LOGIN
     // =========================
 
-
-    if (authState === 'choose-role') {
-  return (
-    <ChooseAccountType
-      lang={lang}
-
-      onBack={() =>
-        setAuthState('welcome')
-      }
-
-      onSelect={(type) => {
-
-        if (type === 'customer') {
-
-          setCurrentRole('customer');
-
-          setAuthState('customer-login');
-
-        }
-
-        else if (type === 'driver') {
-
-          setCurrentRole('captain');
-
-          setAuthState('captain-login');
-
-        }
-
-        else if (type === 'company') {
-
-          setAuthState('company-auth');
-
-        }
-
-        else if (type === 'store') {
-
-          setAuthState('store-auth');
-
-        }
-
-      }}
-    />
-  );
-}
-
-
-
-if (authState === 'customer-login') {
-  return (
-    <CustomerLogin
-      lang={lang}
-
-      onLoginSuccess={() => {
-
-        setCurrentRole('customer');
-
-        setAuthState('authenticated');
-
-      }}
-
-      onSwitchToRegister={() =>
-        setAuthState('customer-register')
-      }
-
-      onBackToRoleSelection={() =>
-        setAuthState('choose-role')
-      }
-    />
-  );
-}
-
+    if (authState === 'customer-login') {
+      return (
+        <CustomerLogin
+          lang={lang}
+          onLoginSuccess={() => {
+            setCurrentRole('customer');
+            setAuthState('authenticated');
+          }}
+          onSwitchToRegister={() =>
+            setAuthState('customer-register')
+          }
+          onBackToRoleSelection={() =>
+            setAuthState('choose-role')
+          }
+        />
+      );
+    }
 
     // =========================
     // CUSTOMER REGISTER
@@ -395,18 +283,15 @@ if (authState === 'customer-login') {
       return (
         <CustomerRegister
           lang={lang}
-
           onRegisterSuccess={() => {
             setCurrentRole('customer');
             setAuthState('authenticated');
           }}
-
           onSwitchToLogin={() =>
             setAuthState('customer-login')
           }
-
           onBackToRoleSelection={() =>
-            setAuthState('welcome')
+            setAuthState('choose-role')
           }
         />
       );
@@ -420,18 +305,15 @@ if (authState === 'customer-login') {
       return (
         <CaptainLogin
           lang={lang}
-
           onLoginSuccess={() => {
             setCurrentRole('captain');
             setAuthState('authenticated');
           }}
-
           onSwitchToRegister={() =>
             setAuthState('captain-register')
           }
-
           onBackToRoleSelection={() =>
-            setAuthState('welcome')
+            setAuthState('choose-role')
           }
         />
       );
@@ -445,115 +327,161 @@ if (authState === 'customer-login') {
       return (
         <CaptainRegister
           lang={lang}
-
           onRegisterSuccess={(data) => {
-
             setCaptainData(data);
-
             setAuthState('captain-waiting');
           }}
-
           onSwitchToLogin={() =>
             setAuthState('captain-login')
           }
-
           onBackToRoleSelection={() =>
-            setAuthState('welcome')
+            setAuthState('choose-role')
           }
         />
       );
     }
-
+    if (authState === 'company-login') {
+      return (
+        <CompanyAuth
+          lang={lang}
+          mode="login"
+          onLoginSuccess={() => {
+            setAuthState('authenticated');
+          }}
+          onSwitchToRegister={() =>
+            setAuthState('company-register')
+          }
+          onBackToRoleSelection={() =>
+            setAuthState('choose-role')
+          }
+        />
+      );
+    }
+    if (authState === 'company-register') {
+      return (
+        <CompanyAuth
+          lang={lang}
+          mode="register"
+          onRegisterSuccess={() => {
+            setAuthState('business-type');
+          }}
+          onSwitchToLogin={() =>
+            setAuthState('company-login')
+          }
+          onBackToRoleSelection={() =>
+            setAuthState('choose-role')
+          }
+        />
+      );
+    }
+    if (authState === 'business-type') {
+      return (
+        <BusinessTypeSelection
+          lang={lang}
+          onNext={() =>
+            setAuthState('business-verification')
+          }
+        />
+      );
+    }
+    if (authState === 'store-login') {
+      return (
+        <StoreAuth
+          lang={lang}
+          mode="login"
+          onLoginSuccess={() => {
+            setAuthState('authenticated');
+          }}
+          onSwitchToRegister={() =>
+            setAuthState('store-register')
+          }
+          onBackToRoleSelection={() =>
+            setAuthState('choose-role')
+          }
+        />
+      );
+    }
+    if (authState === 'store-register') {
+      return (
+        <StoreAuth
+          lang={lang}
+          mode="register"
+          onRegisterSuccess={() => {
+            alert('Store Registered');
+          }}
+          onSwitchToLogin={() =>
+            setAuthState('store-login')
+          }
+          onBackToRoleSelection={() =>
+            setAuthState('choose-role')
+          }
+        />
+      );
+    }
+    if (authState === 'business-verification') {
+      return (
+        <BusinessVerification
+          lang={lang}
+          onSubmit={() =>
+            setAuthState('waiting-approval')
+          }
+        />
+      );
+    }
     // =========================
     // WAITING APPROVAL
     // =========================
 
-    if (authState === 'captain-waiting') {
-      return (
-        <WaitingApproval
-          lang={lang}
-          captainData={captainData}
-
-          onInstantApprove={() => {
-
-            setCurrentRole('captain');
-
-            setAuthState('authenticated');
-          }}
-
-          onBackToLogin={() =>
-            setAuthState('captain-login')
-          }
-        />
-      );
-    }
+    if (authState === 'waiting-approval') {
+  return (
+    <WaitingApproval
+      lang={lang}
+      onBackHome={() =>
+        setAuthState('choose-role')
+      }
+    />
+  );
+}
 
     // =========================
     // AUTHENTICATED
     // =========================
 
-    if (
-      authState === 'authenticated'
-    ) {
+    if (authState === 'authenticated') {
 
       // =====================
       // CAPTAIN MODE
       // =====================
 
       if (currentRole === 'captain') {
-
         switch (captainActiveTab) {
-
           case 'dashboard':
             return (
               <CaptainDashboard
                 lang={lang}
                 captainData={captainData}
-                earnings={
-                  captainEarnings
-                }
-                setEarnings={
-                  setCaptainEarnings
-                }
-                onLogout={
-                  handleLogout
-                }
+                earnings={captainEarnings}
+                setEarnings={setCaptainEarnings}
+                onLogout={handleLogout}
               />
             );
-
           case 'orders':
-            return (
-              <CaptainOrders
-                lang={lang}
-              />
-            );
-
+            return <CaptainOrders lang={lang} />;
           case 'wallet':
             return (
               <CaptainWallet
                 lang={lang}
-                earnings={
-                  captainEarnings
-                }
+                earnings={captainEarnings}
               />
             );
-
           case 'profile':
             return (
               <CaptainProfile
                 lang={lang}
-                captainData={
-                  captainData
-                }
-                onLogout={
-                  handleLogout
-                }
+                captainData={captainData}
+                onLogout={handleLogout}
                 langToggle={() =>
-                  setLang(
-                    isAr
-                      ? 'en'
-                      : 'ar'
-                  )
+                  setLang(isAr ? 'en' : 'ar')
                 }
               />
             );
@@ -568,12 +496,8 @@ if (authState === 'customer-login') {
         return (
           <CategoryRide
             lang={lang}
-            onBack={() =>
-              setActiveCategory(null)
-            }
-            onSubmitOrder={
-              handleCreateOrder
-            }
+            onBack={() => setActiveCategory(null)}
+            onSubmitOrder={handleCreateOrder}
             user={user}
           />
         );
@@ -583,12 +507,8 @@ if (authState === 'customer-login') {
         return (
           <CategoryParcel
             lang={lang}
-            onBack={() =>
-              setActiveCategory(null)
-            }
-            onSubmitOrder={
-              handleCreateOrder
-            }
+            onBack={() => setActiveCategory(null)}
+            onSubmitOrder={handleCreateOrder}
             user={user}
           />
         );
@@ -598,36 +518,25 @@ if (authState === 'customer-login') {
         return (
           <CategoryFood
             lang={lang}
-            onBack={() =>
-              setActiveCategory(null)
-            }
-            onSubmitOrder={
-              handleCreateOrder
-            }
+            onBack={() => setActiveCategory(null)}
+            onSubmitOrder={handleCreateOrder}
             user={user}
           />
         );
       }
 
-      if (
-        activeCategory === 'grocery'
-      ) {
+      if (activeCategory === 'grocery') {
         return (
           <CategoryGrocery
             lang={lang}
-            onBack={() =>
-              setActiveCategory(null)
-            }
-            onSubmitOrder={
-              handleCreateOrder
-            }
+            onBack={() => setActiveCategory(null)}
+            onSubmitOrder={handleCreateOrder}
             user={user}
           />
         );
       }
 
       switch (activeTab) {
-
         case 'home':
           return (
             <AppHome
@@ -641,7 +550,6 @@ if (authState === 'customer-login') {
               }
             />
           );
-
         case 'orders':
           return (
             <AppOrders
@@ -650,19 +558,15 @@ if (authState === 'customer-login') {
               onCancelOrder={() => { }}
             />
           );
-
         case 'wallet':
           return (
             <AppWallet
               lang={lang}
-              transactions={
-                transactions
-              }
+              transactions={transactions}
               user={user}
               onAddFunds={() => { }}
             />
           );
-
         case 'account':
           return (
             <AppAccount
@@ -687,56 +591,37 @@ if (authState === 'customer-login') {
 
         {/* Logo */}
         <div className="flex items-center gap-3">
-
           <div className="bg-gradient-to-tr from-amber-400 to-yellow-300 text-black p-2 rounded-xl">
             <Zap className="h-5 w-5" />
           </div>
-
           <h1 className="font-black text-xl italic">
-            Flash
-            <span className="text-amber-400">
-              Go
-            </span>
+            Flash<span className="text-amber-400">Go</span>
           </h1>
-
         </div>
 
         {/* Actions */}
         <div className="flex items-center gap-3">
 
           {/* Switch Role */}
-          {authState ===
-            'authenticated' && (
-              <button
-                onClick={() => {
-                  setCurrentRole(
-                    currentRole ===
-                      'customer'
-                      ? 'captain'
-                      : 'customer'
-                  );
-                }}
-                className="bg-neutral-800 text-amber-400 px-3 py-2 rounded-xl text-xs font-black"
-              >
-                ♻️
-                {currentRole ===
-                  'customer'
-                  ? 'Driver'
-                  : 'Client'}
-              </button>
-            )}
+          {authState === 'authenticated' && (
+            <button
+              onClick={() => {
+                setCurrentRole(
+                  currentRole === 'customer' ? 'captain' : 'customer'
+                );
+              }}
+              className="bg-neutral-800 text-amber-400 px-3 py-2 rounded-xl text-xs font-black"
+            >
+              ♻️{currentRole === 'customer' ? 'Driver' : 'Client'}
+            </button>
+          )}
 
           {/* Language */}
           <button
-            onClick={() =>
-              setLang(
-                isAr ? 'en' : 'ar'
-              )
-            }
+            onClick={() => setLang(isAr ? 'en' : 'ar')}
             className="bg-neutral-800 px-3 py-2 rounded-xl text-xs font-bold"
           >
-            🌐
-            {isAr ? 'EN' : 'AR'}
+            🌐{isAr ? 'EN' : 'AR'}
           </button>
 
         </div>
@@ -744,44 +629,23 @@ if (authState === 'customer-login') {
 
       {/* CONTENT */}
       <main className="flex-1 p-4">
-
         <AnimatePresence mode="wait">
-
           <motion.div
-            key={
-              authState +
-              currentRole +
-              activeTab
-            }
-            initial={{
-              opacity: 0,
-              y: 12,
-            }}
-            animate={{
-              opacity: 1,
-              y: 0,
-            }}
-            exit={{
-              opacity: 0,
-              y: -12,
-            }}
-            transition={{
-              duration: 0.2,
-            }}
+            key={authState + currentRole + activeTab}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.2 }}
             className="w-full h-full"
           >
             {renderContent()}
           </motion.div>
-
         </AnimatePresence>
-
       </main>
 
       {/* CUSTOMER MOBILE NAVBAR */}
-
       {authState === 'authenticated' &&
         currentRole === 'customer' && (
-
           <div className="md:hidden bg-neutral-900/95 sticky bottom-0 border-t border-neutral-800 h-16 flex items-center justify-between px-4 z-40 pb-2 rounded-t-2xl">
 
             {/* HOME */}
@@ -796,7 +660,6 @@ if (authState === 'customer-login') {
                 }`}
             >
               <Home className="h-5 w-5" />
-
               <span className="text-[9px] font-bold mt-1">
                 {isAr ? 'الرئيسية' : 'Home'}
               </span>
@@ -814,7 +677,6 @@ if (authState === 'customer-login') {
                 }`}
             >
               <Calendar className="h-5 w-5" />
-
               <span className="text-[9px] font-bold mt-1">
                 {isAr ? 'طلباتي' : 'Orders'}
               </span>
@@ -822,22 +684,17 @@ if (authState === 'customer-login') {
 
             {/* CENTER BUTTON */}
             <div className="flex-1 flex flex-col items-center justify-center relative">
-
               <button
                 onClick={() => {
-                  setShowDirectOrderDrawer(
-                    !showDirectOrderDrawer
-                  );
+                  setShowDirectOrderDrawer(!showDirectOrderDrawer);
                 }}
                 className="absolute -top-6 w-14 h-14 bg-amber-400 text-black rounded-full flex items-center justify-center shadow-lg shadow-amber-400/25 border-4 border-neutral-950"
               >
                 <Bike className="h-6 w-6 stroke-[2.5]" />
               </button>
-
               <span className="text-[9px] font-bold text-amber-400 mt-8">
                 {isAr ? 'اطلب الآن' : 'Order'}
               </span>
-
             </div>
 
             {/* WALLET */}
@@ -852,7 +709,6 @@ if (authState === 'customer-login') {
                 }`}
             >
               <Wallet className="h-5 w-5" />
-
               <span className="text-[9px] font-bold mt-1">
                 {isAr ? 'المحفظة' : 'Wallet'}
               </span>
@@ -870,7 +726,6 @@ if (authState === 'customer-login') {
                 }`}
             >
               <User className="h-5 w-5" />
-
               <span className="text-[9px] font-bold mt-1">
                 {isAr ? 'الحساب' : 'Account'}
               </span>
@@ -878,7 +733,6 @@ if (authState === 'customer-login') {
 
           </div>
         )}
-
 
     </div>
   );

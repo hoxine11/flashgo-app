@@ -1,4 +1,8 @@
-import flashgo from '../image/flashgo.png';
+import { Languages, Bike, Zap, ShieldCheck, Headphones, MapPin } from "lucide-react";
+
+// LandingHero.tsx
+const flashgo = '/image/flashgo.png';
+
 interface LandingHeroProps {
   lang: 'ar' | 'en';
   setLang: (lang: 'ar' | 'en') => void;

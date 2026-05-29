@@ -1,11 +1,13 @@
+// SplashScreen.tsx
 import React from 'react';
 import { motion } from 'motion/react';
 
 interface SplashScreenProps {
   lang: 'ar' | 'en';
+  onStart: () => void; // 👈 new prop
 }
 
-export default function SplashScreen({ lang }: SplashScreenProps) {
+export default function SplashScreen({ lang, onStart }: SplashScreenProps) {
   const isAr = lang === 'ar';
 
   return (
@@ -50,7 +52,7 @@ export default function SplashScreen({ lang }: SplashScreenProps) {
           </h1>
         </motion.div>
 
-        {/* Tagline / Motto — appears after the title */}
+        {/* Tagline / Motto */}
         <motion.p
           className="mt-3 text-amber-400/90 tracking-[0.3em] text-xs uppercase"
           initial={{ opacity: 0, y: 10 }}
@@ -60,21 +62,36 @@ export default function SplashScreen({ lang }: SplashScreenProps) {
           {isAr ? 'سرعة • أمان • راحة' : 'Speed • Safety • Comfort'}
         </motion.p>
 
-        {/* Loader — last to appear */}
-        <motion.div
-          className="mt-10 flex items-center gap-3 text-neutral-400"
+        {/* Subtitle */}
+        <motion.p
+          className="mt-2 text-neutral-500 text-sm"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.5, ease: 'easeIn', delay: 1.45 }}
+          transition={{ duration: 0.5, delay: 1.2 }}
         >
-          <div className="relative h-5 w-5">
-            <div className="absolute inset-0 rounded-full border-2 border-amber-500/20" />
-            <div className="absolute inset-0 rounded-full border-2 border-transparent border-t-amber-400 animate-spin" />
-          </div>
-          <span className="text-xs tracking-[0.25em] uppercase">
-            {isAr ? 'جاري الاتصال بالخدمة...' : 'Connecting to Service...'}
-          </span>
-        </motion.div>
+          {isAr ? 'كل ما تحتاجه في تطبيق واحد' : 'Everything you need in one super app'}
+        </motion.p>
+
+        {/* Get Started Button — appears last */}
+        <motion.button
+          onClick={onStart}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: 'easeOut', delay: 1.5 }}
+          whileTap={{ scale: 0.97 }}
+          className="
+            mt-10 w-64
+            bg-amber-400 hover:bg-amber-500
+            active:scale-95
+            text-black font-black
+            py-4 rounded-2xl
+            transition-colors duration-200
+            text-base tracking-wide
+            shadow-lg shadow-amber-400/20
+          "
+        >
+          {isAr ? 'ابدأ الآن' : 'Get Started'}
+        </motion.button>
 
       </div>
     </div>
