@@ -11,7 +11,7 @@ interface Props {
   onBackToRoleSelection?: () => void;
 }
 
-export default function CompanyAuth({
+export default function BusinessAuth({
   lang,
   mode,
   onLoginSuccess,
@@ -22,7 +22,7 @@ export default function CompanyAuth({
 }: Props) {
   const isAr = lang === 'ar';
 
-  const [companyName, setCompanyName] = useState('');
+  const [BusinessName, setBusinessName] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -45,8 +45,8 @@ export default function CompanyAuth({
 
       <h2 className="text-center text-2xl font-bold mb-6">
         {mode === 'register'
-          ? (isAr ? 'تسجيل شركة' : 'Company Registration')
-          : (isAr ? 'دخول الشركة' : 'Company Login')}
+          ? (isAr ? 'تسجيل شركة' : 'Business Registration')
+          : (isAr ? 'دخول الشركة' : 'Business Login')}
       </h2>
 
       <div className="space-y-4">
@@ -55,10 +55,10 @@ export default function CompanyAuth({
           <>
             <input
               className="w-full bg-neutral-900 p-3 rounded-xl"
-              placeholder={isAr ? 'اسم الشركة' : 'Company Name'}
-              value={companyName}
+              placeholder={isAr ? 'اسم الشركة' : 'Business Name'}
+              value={BusinessName}
               onChange={(e) =>
-                setCompanyName(e.target.value)
+                setBusinessName(e.target.value)
               }
             />
 
@@ -116,7 +116,7 @@ export default function CompanyAuth({
           >
             {isAr
               ? 'إنشاء حساب شركة'
-              : 'Create Company Account'}
+              : 'Create Business Account'}
           </button>
         ) : (
           <button

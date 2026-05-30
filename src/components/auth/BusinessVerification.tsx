@@ -4,15 +4,17 @@ import {
   Image,
   Plus,
 } from 'lucide-react';
-
+import { ArrowLeft } from 'lucide-react';
 interface Props {
   lang: 'ar' | 'en';
   onSubmit: () => void;
+  onBack: () => void;
 }
 
 export default function BusinessVerification({
   lang,
   onSubmit,
+  onBack,
 }: Props) {
 
   const isAr = lang === 'ar';
@@ -46,7 +48,14 @@ export default function BusinessVerification({
 
   return (
     <div className="p-6 text-white">
-
+<div className="mb-6">
+  <button
+    onClick={onBack}
+    className="text-white hover:text-amber-400 transition-colors"
+  >
+    <ArrowLeft size={28} />
+  </button>
+</div>
       <h2 className="text-center text-2xl font-bold mb-2">
         {isAr
           ? 'التحقق من المؤسسة'

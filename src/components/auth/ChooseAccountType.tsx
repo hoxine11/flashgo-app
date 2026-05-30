@@ -2,10 +2,10 @@
 import {
   User,
   Bike,
-  Building2,
-  Store,
+
   ChevronRight,
   ArrowLeft,
+  Briefcase,
 } from 'lucide-react';
 
 interface ChooseAccountTypeProps {
@@ -15,8 +15,7 @@ interface ChooseAccountTypeProps {
     type:
       | 'customer'
       | 'driver'
-      | 'company'
-      | 'store'
+      | 'business'
   ) => void;
 }
 
@@ -52,25 +51,18 @@ export default function ChooseAccountType({
     },
 
     {
-      id: 'company',
-      icon: Building2,
-      titleAr: 'شركة / مؤسسة',
-      titleEn: 'Company / Business',
-      descAr:
-        'إدارة أعمالك والتوصيلات',
-      descEn:
-        'Manage your business and deliveries',
-    },
+      id: 'business',
+      icon: Briefcase,
 
-    {
-      id: 'store',
-      icon: Store,
-      titleAr: 'متجر / مطعم',
-      titleEn: 'Store / Restaurant',
+      titleAr: 'مؤسسة',
+
+      titleEn: 'Business',
+
       descAr:
-        'انضم كبائع أو مطعم',
+        'مطعم، متجر، صيدلية، سوبرماركت أو شركة توصيل',
+
       descEn:
-        'Join as a store or restaurant partner',
+        'Restaurant, Store, Pharmacy, Supermarket or Delivery Company',
     },
   ];
 
@@ -104,7 +96,7 @@ export default function ChooseAccountType({
 
         {/* HEADER */}
 
-        
+
 
         {/* TITLE */}
 

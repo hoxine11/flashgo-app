@@ -23,12 +23,12 @@ import CategoryFood from './CategoryFood';
 import AppOrders from './AppOrders';
 import AppWallet from './AppWallet';
 import AppAccount from './AppAccount';
-
+import BusinessApp from '../BusinessApp';
 // Auth Components
 import CustomerLogin from './auth/CustomerLogin';
 import CustomerRegister from './auth/CustomerRegister';
-import CompanyAuth from './auth/CompanyAuth';
-import StoreAuth from './auth/StoreAuth';
+import BusinessAuth from './auth/BusinessAuth';
+
 import CaptainLogin from './auth/CaptainLogin';
 import CaptainRegister from './auth/CaptainRegister';
 import BusinessTypeSelection from './auth/BusinessTypeSelection';
@@ -83,7 +83,7 @@ export default function PhoneSimulator({
   // =========================
 
   const [currentRole, setCurrentRole] =
-    useState<'customer' | 'captain' | null>(null);
+    useState<'customer' | 'captain' | 'business' | null>(null);
 
   // ✅ Starts at 'choose-role' directly — splash screen handles 'welcome'
   const [authState, setAuthState] =
@@ -94,14 +94,11 @@ export default function PhoneSimulator({
       | 'captain-login'
       | 'captain-register'
       | 'captain-waiting'
-      | 'company-login'
-      | 'company-register'
+      | 'business-login'
+      | 'business-register'
       | 'business-type'
       | 'business-verification'
-      | 'store-login'
-      | 'business-verification'
       | 'waiting-approval'
-      | 'store-register'
       | 'authenticated'
     >('choose-role');
 
@@ -243,11 +240,10 @@ export default function PhoneSimulator({
             } else if (type === 'driver') {
               setCurrentRole('captain');
               setAuthState('captain-login');
-            } else if (type === 'company') {
-              setAuthState('company-login');
-            } else if (type === 'store') {
-              setAuthState('store-login');
-            }
+            } else if (type === 'business') {
+  setCurrentRole('business');
+  setAuthState('business-login');
+}
           }}
         />
       );
@@ -340,16 +336,17 @@ export default function PhoneSimulator({
         />
       );
     }
-    if (authState === 'company-login') {
+    if (authState === 'business-login') {
       return (
-        <CompanyAuth
+        <BusinessAuth
           lang={lang}
           mode="login"
           onLoginSuccess={() => {
+             setCurrentRole('business');
             setAuthState('authenticated');
           }}
           onSwitchToRegister={() =>
-            setAuthState('company-register')
+            setAuthState('business-register')
           }
           onBackToRoleSelection={() =>
             setAuthState('choose-role')
@@ -357,16 +354,16 @@ export default function PhoneSimulator({
         />
       );
     }
-    if (authState === 'company-register') {
+    if (authState === 'business-register') {
       return (
-        <CompanyAuth
+        <BusinessAuth
           lang={lang}
           mode="register"
           onRegisterSuccess={() => {
             setAuthState('business-type');
           }}
           onSwitchToLogin={() =>
-            setAuthState('company-login')
+            setAuthState('business-login')
           }
           onBackToRoleSelection={() =>
             setAuthState('choose-role')
@@ -375,80 +372,60 @@ export default function PhoneSimulator({
       );
     }
     if (authState === 'business-type') {
-      return (
-        <BusinessTypeSelection
-          lang={lang}
-          onNext={() =>
-            setAuthState('business-verification')
-          }
-        />
-      );
-    }
-    if (authState === 'store-login') {
-      return (
-        <StoreAuth
-          lang={lang}
-          mode="login"
-          onLoginSuccess={() => {
-            setAuthState('authenticated');
-          }}
-          onSwitchToRegister={() =>
-            setAuthState('store-register')
-          }
-          onBackToRoleSelection={() =>
-            setAuthState('choose-role')
-          }
-        />
-      );
-    }
-    if (authState === 'store-register') {
-      return (
-        <StoreAuth
-          lang={lang}
-          mode="register"
-          onRegisterSuccess={() => {
-            alert('Store Registered');
-          }}
-          onSwitchToLogin={() =>
-            setAuthState('store-login')
-          }
-          onBackToRoleSelection={() =>
-            setAuthState('choose-role')
-          }
-        />
-      );
-    }
+  return (
+    <BusinessTypeSelection
+      lang={lang}
+      onBack={() =>
+        setAuthState('business-register')
+      }
+      onNext={(type) => {
+
+        console.log(type);
+
+        setAuthState(
+          'business-verification'
+        );
+
+      }}
+    />
+  );
+}
     if (authState === 'business-verification') {
-      return (
-        <BusinessVerification
-          lang={lang}
-          onSubmit={() =>
-            setAuthState('waiting-approval')
-          }
-        />
-      );
-    }
+  return (
+    <BusinessVerification
+      lang={lang}
+      onBack={() =>
+        setAuthState('business-type')
+      }
+      onSubmit={() =>
+        setAuthState('waiting-approval')
+      }
+    />
+  );
+}
     // =========================
     // WAITING APPROVAL
     // =========================
 
     if (authState === 'waiting-approval') {
-  return (
-    <WaitingApproval
-      lang={lang}
-      onBackHome={() =>
-        setAuthState('choose-role')
-      }
-    />
-  );
-}
+      return (
+        <WaitingApproval
+          lang={lang}
+          onBackHome={() =>
+            setAuthState('choose-role')
+          }
+        />
+      );
+    }
 
     // =========================
     // AUTHENTICATED
     // =========================
 
     if (authState === 'authenticated') {
-
+if (currentRole === 'business') {
+  return <BusinessApp />;
+}
       // =====================
       // CAPTAIN MODE
       // =====================
