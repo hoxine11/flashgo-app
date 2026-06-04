@@ -20,7 +20,7 @@ export default function CaptainWallet({ lang, earnings }: CaptainWalletProps) {
     if (earnings.balance < 1000) {
       alert(
         isAr 
-          ? 'عذراً! الحد الأدنى لسحب رصيد محفظة الكابتن برنت هو ١٠٠٠ دج.' 
+          ? 'عذراً! الحد الأدنى لسحب رصيد محفظة  برنت هو ١٠٠٠ دج.' 
           : 'Minimum withdrawal threshold is 1000 DA.'
       );
       return;
@@ -38,7 +38,7 @@ export default function CaptainWallet({ lang, earnings }: CaptainWalletProps) {
       {/* Dynamic range toggle */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-neutral-950 p-4 rounded-3xl border border-neutral-850">
         <div>
-          <h2 className="text-base font-black text-white">{isAr ? 'محفظة أرباح الكابتن' : 'Earnings Dashboard'}</h2>
+          <h2 className="text-base font-black text-white">{isAr ? 'محفظة أرباح العامل' : 'Earnings Dashboard'}</h2>
           <p className="text-[10px] text-neutral-450 mt-1">{isAr ? 'تابع عوائدك اليومية، الحوافز، ومؤشرات الأداء' : 'Track your courier earnings, loyalty tips and active bonuses'}</p>
         </div>
 

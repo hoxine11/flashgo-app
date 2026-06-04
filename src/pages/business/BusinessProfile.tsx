@@ -3,7 +3,13 @@ import { useBusiness } from '../../context/BusinessContext';
 import { Store, Phone, Mail, MapPin, Clock, Edit2, Check, Info, FileText } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
-export const BusinessProfile: React.FC = () => {
+interface BusinessProfileProps {
+  onLogout: () => void;
+}
+
+export const BusinessProfile: React.FC<BusinessProfileProps> = ({
+  onLogout,
+}) => {
   const { business, updateBusiness } = useBusiness();
   const [isEditing, setIsEditing] = useState(false);
 
@@ -84,7 +90,7 @@ export const BusinessProfile: React.FC = () => {
       <div id="branding-cover-block" className="relative p-5 rounded-2xl bg-zinc-900 border border-zinc-850/70 overflow-hidden flex flex-col items-center text-center">
         {/* Background visual cover blend */}
         <div className="absolute top-0 left-0 right-0 h-16 bg-gradient-to-r from-amber-500/20 to-yellow-500/15" />
-        
+
         <div id="profile-picture-container" className="relative mt-5 mb-2">
           <div className="w-20 h-20 rounded-2xl bg-gradient-to-tr from-amber-400 to-yellow-500 p-[2px] shadow-lg shadow-amber-500/10">
             <img
@@ -307,6 +313,23 @@ export const BusinessProfile: React.FC = () => {
               className="w-full bg-zinc-90 w-full py-3 px-4 rounded-xl text-xs font-bold font-sans text-amber-400 border border-zinc-800 hover:bg-zinc-850/60 transition-colors cursor-pointer text-center"
             >
               Configure Store Profiles
+            </button>
+            <button
+              onClick={onLogout}
+              className="
+    w-full
+    bg-red-500/10
+    text-red-400
+    py-3
+    rounded-xl
+    font-bold
+    hover:bg-red-500/20
+    transition-colors
+    cursor-pointer
+    mt-3
+  "
+            >
+              Logout
             </button>
           </motion.div>
         )}

@@ -49,6 +49,7 @@ import {
   WalletTransaction,
   UserProfile,
 } from '../types';
+import CaptainPreferences from './captain/CaptainPreferences';
 
 interface PhoneSimulatorProps {
   lang: 'ar' | 'en';
@@ -99,6 +100,7 @@ export default function PhoneSimulator({
       | 'business-type'
       | 'business-verification'
       | 'waiting-approval'
+      | 'captain-preferences'
       | 'authenticated'
     >('choose-role');
 
@@ -128,7 +130,7 @@ export default function PhoneSimulator({
     wilaya: 'الجزائر العاصمة',
     model: 'Peugeot Tweet 125cc',
   });
-
+const [captainPreferences, setCaptainPreferences] = useState<string[]>([]);
   const [captainActiveTab, setCaptainActiveTab] =
     useState<
       'dashboard' | 'orders' | 'wallet' | 'profile'
@@ -303,7 +305,7 @@ export default function PhoneSimulator({
           lang={lang}
           onLoginSuccess={() => {
             setCurrentRole('captain');
-            setAuthState('authenticated');
+           setAuthState('captain-preferences');
           }}
           onSwitchToRegister={() =>
             setAuthState('captain-register')
@@ -336,6 +338,17 @@ export default function PhoneSimulator({
         />
       );
     }
+    if (authState === 'captain-preferences') {
+  return (
+    <CaptainPreferences
+      lang={lang}
+      onContinue={(types) => {
+        setCaptainPreferences(types);
+        setAuthState('authenticated');
+      }}
+    />
+  );
+}
     if (authState === 'business-login') {
       return (
         <BusinessAuth
@@ -424,7 +437,7 @@ export default function PhoneSimulator({
 
     if (authState === 'authenticated') {
 if (currentRole === 'business') {
-  return <BusinessApp />;
+  return <BusinessApp onLogout={handleLogout} />;
 }
       // =====================
       // CAPTAIN MODE
@@ -551,6 +564,7 @@ if (currentRole === 'business') {
               user={user}
               onUpdateUser={() => { }}
               setLang={setLang}
+              onLogout={handleLogout}
             />
           );
       }
@@ -621,6 +635,78 @@ if (currentRole === 'business') {
       </main>
 
       {/* CUSTOMER MOBILE NAVBAR */}
+      {authState === 'authenticated' &&
+  currentRole === 'captain' && (
+
+    <div className="md:hidden bg-neutral-900/95 sticky bottom-0 border-t border-neutral-800 h-16 flex items-center justify-between px-4 z-40 pb-2 rounded-t-2xl">
+
+      <button
+        onClick={() =>
+          setCaptainActiveTab('dashboard')
+        }
+        className={`flex flex-col items-center flex-1 ${
+          captainActiveTab === 'dashboard'
+            ? 'text-amber-400'
+            : 'text-neutral-500'
+        }`}
+      >
+        <Home className="h-5 w-5" />
+        <span className="text-[9px]">
+          Dashboard
+        </span>
+      </button>
+
+      <button
+        onClick={() =>
+          setCaptainActiveTab('orders')
+        }
+        className={`flex flex-col items-center flex-1 ${
+          captainActiveTab === 'orders'
+            ? 'text-amber-400'
+            : 'text-neutral-500'
+        }`}
+      >
+        <Calendar className="h-5 w-5" />
+        <span className="text-[9px]">
+          Orders
+        </span>
+      </button>
+
+      <button
+        onClick={() =>
+          setCaptainActiveTab('wallet')
+        }
+        className={`flex flex-col items-center flex-1 ${
+          captainActiveTab === 'wallet'
+            ? 'text-amber-400'
+            : 'text-neutral-500'
+        }`}
+      >
+        <Wallet className="h-5 w-5" />
+        <span className="text-[9px]">
+          Wallet
+        </span>
+      </button>
+
+      <button
+        onClick={() =>
+          setCaptainActiveTab('profile')
+        }
+        className={`flex flex-col items-center flex-1 ${
+          captainActiveTab === 'profile'
+            ? 'text-amber-400'
+            : 'text-neutral-500'
+        }`}
+      >
+        <User className="h-5 w-5" />
+        <span className="text-[9px]">
+          Profile
+        </span>
+      </button>
+
+    </div>
+
+)}
       {authState === 'authenticated' &&
         currentRole === 'customer' && (
           <div className="md:hidden bg-neutral-900/95 sticky bottom-0 border-t border-neutral-800 h-16 flex items-center justify-between px-4 z-40 pb-2 rounded-t-2xl">

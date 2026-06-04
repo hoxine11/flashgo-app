@@ -93,7 +93,7 @@ export default function CaptainOrders({ lang }: CaptainOrdersProps) {
       {/* Visual Header */}
       <div className="flex justify-between items-center bg-neutral-950 p-4.5 rounded-3xl border border-neutral-850">
         <div>
-          <h2 className="text-lg font-black text-white">{isAr ? 'سجلات طلبات الكابتن' : 'My Completed Flights'}</h2>
+          <h2 className="text-lg font-black text-white">{isAr ? 'سجلات الطلبات ' : 'My Completed Flights'}</h2>
           <span className="text-[10px] text-neutral-450 leading-none block mt-1">
             {isAr ? 'قائمة كامل مشاويرك وطلبيات التوصيل بالدراجة النارية' : 'Review historical trips, distances and earnings log'}
           </span>
@@ -165,7 +165,7 @@ export default function CaptainOrders({ lang }: CaptainOrdersProps) {
 
                 <div className="text-right">
                   <span className="text-sm font-black text-amber-400 font-mono">{ord.price} DA</span>
-                  <span className="text-[9px] text-neutral-500 block">{isAr ? 'صافي الكابتن' : 'Earned'}</span>
+                  <span className="text-[9px] text-neutral-500 block">{isAr ? 'الصافي ' : 'Earned'}</span>
                 </div>
               </div>
 

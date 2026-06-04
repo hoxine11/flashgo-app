@@ -15,30 +15,23 @@ import { BusinessProfile } from './pages/business/BusinessProfile';
 import { BusinessAnalytics } from './pages/business/BusinessAnalytics';
 import { BusinessNotifications } from './pages/business/BusinessNotifications';
 
-import { 
-  Wifi, 
-  Battery, 
-  Signal, 
-  BellRing, 
-  Heart, 
-  Sparkles, 
-  Zap, 
-  CheckSquare, 
-  Package, 
-  TrendingUp, 
-  Rocket, 
-  Smile, 
-  Menu,
-  HeartHandshake
-} from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
+interface BusinessAppProps {
+  onLogout: () => void;
+}
+
 
 // Inner App content that has access to BusinessContext
-function AppContent() {
-  const { 
-    activeTab, 
-    setActiveTab, 
-    simulateIncomingOrder, 
+interface AppContentProps {
+  onLogout: () => void;
+}
+
+function AppContent({
+  onLogout,
+}: AppContentProps) {
+  const {
+    activeTab,
+    setActiveTab,
+    simulateIncomingOrder,
     notifications,
     business,
     stats
@@ -66,7 +59,7 @@ function AppContent() {
       const mostRecent = unreadNewOrders[0];
       setLatestClientName(mostRecent.title);
       setShowSimulatedBanner(true);
-      
+
       // Auto dismiss after 4 seconds
       const timeout = setTimeout(() => {
         setShowSimulatedBanner(false);
@@ -89,7 +82,11 @@ function AppContent() {
       case 'wallet':
         return <BusinessWallet />;
       case 'profile':
-        return <BusinessProfile />;
+        return (
+          <BusinessProfile
+            onLogout={onLogout}
+          />
+        );
       case 'analytics':
         return <BusinessAnalytics />;
       case 'notifications':
@@ -104,20 +101,22 @@ function AppContent() {
   };
 
   return (
-  <div className="h-full bg-black text-white">
+    <div className="h-full bg-black text-white">
 
-    {renderTabContent()}
+      {renderTabContent()}
 
-    <BottomNavigation />
+      <BottomNavigation />
 
-  </div>
-);
+    </div>
+  );
 }
 
-export default function App() {
+export default function BusinessApp({
+  onLogout,
+}: BusinessAppProps) {
   return (
     <BusinessProvider>
-      <AppContent />
+      <AppContent onLogout={onLogout} />
     </BusinessProvider>
   );
 }

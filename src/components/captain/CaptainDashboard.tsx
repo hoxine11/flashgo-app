@@ -73,7 +73,10 @@ export default function CaptainDashboard({
   setEarnings
 }: CaptainDashboardProps) {
   const isAr = lang === 'ar';
-  
+  const [deliveryPreferences, setDeliveryPreferences] = useState([
+  'food',
+  'parcel'
+]);
   // Status hooks
   const [isOnline, setIsOnline] = useState(true);
   const [incomingRequest, setIncomingRequest] = useState<SimulatedRequest | null>(null);
@@ -140,7 +143,7 @@ export default function CaptainDashboard({
       // Finish Order alert
       alert(
         isAr 
-          ? `أحسنتم يا كابتن المجهود عظيم! تم تفريغ الطلب بنجاح. أضيف إلى رصيدك اليومي +${rewardedFee} دج` 
+          ? `أحسنتم يا  المجهود عظيم! تم تفريغ الطلب بنجاح. أضيف إلى رصيدك اليومي +${rewardedFee} دج` 
           : `Amazing job captain! Package successfully delivered. Earned +${rewardedFee} DA.`
       );
 
@@ -153,14 +156,14 @@ export default function CaptainDashboard({
     <div className="p-4 md:p-6 space-y-6" dir={isAr ? 'rtl' : 'ltr'}>
       
       {/* Top Banner with name and online toggle */}
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-neutral-950 p-4 rounded-3xl border border-neutral-850/80">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-neutral-950 p-4 rounded-3xl shadow-xl shadow-black/40">
         <div className="flex items-center gap-3">
           <div className="p-3.5 bg-amber-400 text-black rounded-2xl shadow-lg ring-4 ring-amber-400/10">
             <Bike className="h-6 w-6 stroke-[2.3]" />
           </div>
           <div>
             <h3 className="font-black text-white text-base">
-              {isAr ? `مرحباً بك، كابتن ${captainData?.name || 'أحمد'}!` : `Welcome back, Captain ${captainData?.name || 'Ahmed'}!`}
+              {isAr ? `مرحباً بك،  ${captainData?.name || 'أحمد'}!` : `Welcome back,  ${captainData?.name || 'Ahmed'}!`}
             </h3>
             <span className="text-[10px] text-neutral-450 font-mono block">
               {isAr ? `دراجة: ${captainData?.model || 'Honda SH 150'} | الولاية: ${captainData?.wilaya || 'الجزائر العاصمة'}` : `Vehicle: ${captainData?.model || 'Honda SH 150'} | Province: ${captainData?.wilaya || 'Algiers'}`}
@@ -192,7 +195,7 @@ export default function CaptainDashboard({
       <div className="grid grid-cols-3 gap-3">
         
         {/* Today Earnings */}
-        <div className="bg-neutral-950 p-4 border border-neutral-850 rounded-2xl relative overflow-hidden">
+        <div className="bg-neutral-950 p-4 rounded-2xl shadow-lg shadow-black/40 relative overflow-hidden">
           <div className="absolute top-2 right-2 text-neutral-800"><DollarSign className="h-7 w-7 opacity-20" /></div>
           <span className="text-[9px] text-neutral-450 font-bold block uppercase">{isAr ? 'أرباح اليوم كاش' : 'Today Earnings'}</span>
           <h2 className="text-lg md:text-2xl font-black font-mono text-amber-400 tracking-tight mt-1">
@@ -202,16 +205,16 @@ export default function CaptainDashboard({
         </div>
 
         {/* Completed deliveries counter */}
-        <div className="bg-neutral-950 p-4 border border-neutral-850 rounded-2xl relative overflow-hidden">
+        <div className="bg-neutral-950 p-4 rounded-2xl shadow-lg shadow-black/40 relative overflow-hidden">
           <span className="text-[9px] text-neutral-450 font-bold block uppercase">{isAr ? 'المكتملة اليوم' : 'Trips Done'}</span>
           <h2 className="text-lg md:text-2xl font-black font-mono text-white tracking-tight mt-1">
             {earnings.completedCount} <span className="text-[9px] font-sans font-bold">{isAr ? 'رحلات' : 'Orders'}</span>
           </h2>
-          <span className="text-[8px] text-amber-400 block font-semibold mt-0.5">⭐ 4.9 {isAr ? 'تقييم كابتن' : 'Avg Rating'}</span>
+          <span className="text-[8px] text-amber-400 block font-semibold mt-0.5">⭐ 4.9 {isAr ? 'تقييم ' : 'Avg Rating'}</span>
         </div>
 
         {/* Stored fleet current balance */}
-        <div className="bg-neutral-950 p-4 border border-neutral-850 rounded-2xl relative overflow-hidden">
+        <div className="bg-neutral-950 p-4 rounded-2xl shadow-lg shadow-black/40 relative overflow-hidden">
           <span className="text-[9px] text-neutral-450 font-bold block uppercase">{isAr ? 'الرصيد الكلي بالمحفظة' : 'My Fleet Ledger'}</span>
           <h2 className="text-lg md:text-2xl font-black font-mono text-emerald-400 tracking-tight mt-1">
             {earnings.balance} <span className="text-[9px] font-sans font-bold">{isAr ? 'دج' : 'DA'}</span>
@@ -235,7 +238,7 @@ export default function CaptainDashboard({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="bg-neutral-950/80 border border-neutral-850 p-8 rounded-3xl text-center space-y-4 h-64 flex flex-col items-center justify-center"
+                className="bg-neutral-950 p-6 rounded-3xl shadow-xl shadow-black/40 text-center space-y-4 h-64 flex flex-col items-center justify-center"
               >
                 <div className="w-14 h-14 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center text-neutral-500">
                   <Activity className="h-6 w-6 stroke-[1.8]" />
@@ -279,7 +282,7 @@ export default function CaptainDashboard({
                     <span className="text-[10px] text-neutral-450 font-semibold">{isAr ? 'نوع التوصيل: مستندات وقصاصات أكل فلاش' : 'Direct express messenger delivery link'}</span>
                   </div>
                   <div className="text-right">
-                    <span className="text-[10px] text-neutral-500 block">{isAr ? 'صافي ربحك الفوري' : 'Est. Captain payout'}</span>
+                    <span className="text-[10px] text-neutral-500 block">{isAr ? 'صافي ربحك الفوري' : 'Est.  payout'}</span>
                     <span className="text-lg font-black text-amber-400 font-mono">{incomingRequest.fee} DA</span>
                   </div>
                 </div>
@@ -435,9 +438,9 @@ export default function CaptainDashboard({
         {/* Mini Smart Grid map visualization (Col span 2) */}
         <div className="lg:col-span-2 space-y-4">
           
-          <div className="bg-neutral-950 p-4 border border-neutral-850 rounded-3xl space-y-3">
+          <div className="bg-neutral-950 p-4 rounded-3xl shadow-xl shadow-black/40 space-y-3">
             <span className="text-[10px] text-neutral-500 font-mono tracking-widest font-bold uppercase block">
-              {isAr ? 'تظليل ذكي · خريطة رادار كابتن' : 'SMART GPS ALTERS RADAR'}
+              {isAr ? 'تظليل ذكي · خريطة رادار ' : 'SMART GPS ALTERS RADAR'}
             </span>
 
             {/* Smart simulated canvas map container */}
@@ -488,15 +491,7 @@ export default function CaptainDashboard({
               </div>
             </div>
 
-            <div className="p-3 bg-neutral-900 border border-neutral-800 rounded-2xl flex items-center justify-between text-xs font-semibold text-neutral-300">
-              <span className="flex items-center gap-1">
-                <Shield className="h-4 w-4 text-emerald-400 shrink-0" />
-                <span>{isAr ? 'عقود التأمين فلاش قو' : 'Insurance fully active'}</span>
-              </span>
-              <span className="text-[10px] bg-emerald-400/10 text-emerald-400 px-2 py-0.5 rounded border border-emerald-400/15 font-mono">
-                {isAr ? 'مؤمن بالكامل' : 'PROTECTED'}
-              </span>
-            </div>
+           
           </div>
 
         </div>
