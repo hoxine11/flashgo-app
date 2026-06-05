@@ -21,7 +21,7 @@ interface CategoryParcelProps {
   user: UserProfile;
 }
 
-const PARCEL_TYPES = [{ id: 'document', name: 'وثائق ومستندات', nameEn: 'Documents & Papers', image: '../image/image.jpg', cost: 150, }, { id: 'box', name: 'صندوق أو كرتون طرد', nameEn: 'Regular Box/Parcel', image: '../image/torod.png', cost: 250, }, { id: 'fragile', name: 'مواد قابلة للكسر', nameEn: 'Fragile Glassware/Device', image: '../image/vers.png', cost: 350, }, { id: 'food', name: 'مأكولات جاهزة مجمدة', nameEn: 'Food/Meal Shipment', image: '../image/glasson.jpg', cost: 200, },];
+const PARCEL_TYPES = [{ id: 'document', name: 'وثائق ومستندات', nameEn: 'Documents & Papers', image: '../image/image.png', cost: 150, }, { id: 'box', name: 'صندوق أو كرتون طرد', nameEn: 'Regular Box/Parcel', image: '../image/torod.png', cost: 250, }, { id: 'fragile', name: 'مواد قابلة للكسر', nameEn: 'Fragile Glassware/Device', image: '../image/vers.png', cost: 350, }, { id: 'food', name: 'مأكولات جاهزة مجمدة', nameEn: 'Food/Meal Shipment', image: '../image/glasson.jpg', cost: 200, },];
 
 
 export default function CategoryParcel({ lang, onBack, onSubmitOrder, user }: CategoryParcelProps) {

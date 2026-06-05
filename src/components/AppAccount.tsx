@@ -48,7 +48,7 @@ export default function AppAccount({
         {/* Profile Stats Overview */}
         <div className="bg-neutral-900 rounded-2xl p-4 flex items-center gap-3 shadow-xl shadow-black/30">
           <div className="h-14 w-14 rounded-full bg-amber-400 text-black flex items-center justify-center text-3xl font-bold ring-4 ring-transparent">
-            🦁
+            
           </div>
           <div>
             <h4 className="font-extrabold text-sm text-neutral-100 flex items-center gap-1.5">
