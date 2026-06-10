@@ -58,7 +58,7 @@ export default function CaptainRegister({
     setErrorMsg('');
 
     if (!fullName || !phone || !motorcycleModel || !password) {
-      setErrorMsg(isAr ? 'يرجى ملء جميع الحقول لمعلومات الكابتن' : 'Please fill out all captain details');
+      setErrorMsg(isAr ? 'يرجى ملء جميع الحقول لمعلومات الكبتن' : 'Please fill out all captain details');
       return;
     }
 
@@ -104,9 +104,7 @@ export default function CaptainRegister({
       </button>
 
       {/* Main Form Title */}
-      <h2 className="text-xl font-black text-neutral-100 uppercase pt-4 text-center">
-        {isAr ? 'الانضمام ككابتن دراجة' : 'Register as Captain'}
-      </h2>
+      
       <p className="text-[11px] text-neutral-400 text-center leading-relaxed mt-1.5 mb-6">
         {isAr ? 'سجل بياناتك ومستنداتك للحصول على تصريح العمل الفوري وتنشيط حسابك' : 'Submit your documents for quick automated review and real-time dashboard activation'}
       </p>
@@ -122,7 +120,7 @@ export default function CaptainRegister({
         {/* Informative alert */}
         <div className="bg-amber-400/10 border border-amber-400/15 p-3 rounded-xl text-[10px] text-amber-400 leading-relaxed">
           💡 {isAr 
-            ? 'انقر على مربعات الملفات بالأسفل لمحاكاة تحميل الوثائق قبل تقديم طلبك الكابتني.' 
+            ? 'انقر على مربعات الملفات بالأسفل لمحاكاة تحميل الوثائق قبل تقديم طلبك .' 
             : 'Click on the document cards below to simulate raising papers for quick auto-approval.'}
         </div>
 
@@ -226,7 +224,7 @@ export default function CaptainRegister({
 
           {/* Password secure */}
           <div className="space-y-1 md:col-span-2">
-            <label className="text-[10px] font-bold text-neutral-450 uppercase block">{isAr ? 'كلمة سر حساب الكابتن' : 'Captain Password'}</label>
+            <label className="text-[10px] font-bold text-neutral-450 uppercase block">{isAr ? 'كلمة سر حساب العامل' : 'Driver Password'}</label>
             <div className="relative">
               <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-neutral-500">
                 <Lock className="h-3.5 w-3.5" />
@@ -342,7 +340,7 @@ export default function CaptainRegister({
           type="submit"
           className="w-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black font-black py-3 rounded-xl text-xs shadow-lg shadow-amber-400/10 hover:shadow-amber-400/20 active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-6"
         >
-          <span>{isAr ? 'إرسال طلب الانضمام ككابتن فلاش' : 'Submit Fleet Captain Request'}</span>
+          <span>{isAr ? 'إرسال طلب الانضمام  ' : 'Submit Fleet Request'}</span>
           {isAr ? <ChevronRight className="h-4 w-4 shrink-0 rotate-180" /> : <ChevronRight className="h-4 w-4 shrink-0" />}
         </button>
       </form>
@@ -350,13 +348,13 @@ export default function CaptainRegister({
       {/* Already registered */}
       <div className="text-center mt-5 pt-4 border-t border-neutral-850">
         <span className="text-xs text-neutral-500">
-          {isAr ? 'مسجل بالفعل بقاعدة البيانات ككابتن؟' : 'Already have a captain account?'}{' '}
+          {isAr ? 'مسجل بالفعل بقاعدة البيانات كعامل توصيل؟' : 'Already have a driver account?'}{' '}
         </span>
         <button
           onClick={onSwitchToLogin}
           className="text-xs font-black text-amber-500 hover:text-amber-400 hover:underline bg-transparent border-none cursor-pointer"
         >
-          {isAr ? 'تسجيل دخول الكابتن' : 'Captain Login'}
+          {isAr ? 'تسجيل الدخول ' : ' Login'}
         </button>
       </div>
     </motion.div>

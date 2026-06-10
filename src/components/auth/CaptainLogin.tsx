@@ -62,7 +62,7 @@ export default function CaptainLogin({
           {isAr ? 'بوابة كابتن فلاش' : 'FLASH CAPTAIN PORTAL'}
         </span>
         <h2 className="text-xl font-black text-neutral-100 italic uppercase">
-          {isAr ? 'دخول الكابتن' : 'Captain Login'}
+          {isAr ? 'دخول عامل التوصيل' : 'Driver Login'}
         </h2>
         <p className="text-[11px] text-neutral-450 mt-1 leading-relaxed">
           {isAr ? 'أهلاً بك كابتن! سجل دخولك لاستلام الطلبات وبدء الكسب والعمل فوراً' : 'Welcome captain! Deliver packages, carry out trips and maximize earnings'}
@@ -128,14 +128,64 @@ export default function CaptainLogin({
         </div>
 
         {/* Start Working Now Button */}
-        <button
-          type="submit"
-          className="w-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black py-3 rounded-xl text-xs font-black shadow-lg shadow-amber-400/10 hover:shadow-amber-400/25 active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-2 mt-4"
-        >
-          <Zap className="h-4 w-4 text-black stroke-[3]" />
-          <span>{isAr ? 'ابدأ العمل وكسب الدخل الآن' : 'Start Working Now'}</span>
-          {isAr ? <ArrowLeft className="h-4 w-4" /> : <ArrowRight className="h-4 w-4" />}
-        </button>
+        {/* Login Button */}
+<button
+  type="submit"
+  className="w-full bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-black py-3 rounded-xl text-xs font-black shadow-lg shadow-amber-400/10 hover:shadow-amber-400/20 active:scale-[0.99] transition-all cursor-pointer flex items-center justify-center gap-1.5 mt-2"
+>
+  <span>{isAr ? 'تسجيل الدخول' : 'Login'}</span>
+  {isAr ? (
+    <ArrowLeft className="h-4 w-4" />
+  ) : (
+    <ArrowRight className="h-4 w-4" />
+  )}
+</button>
+
+{/* Divider */}
+<div className="flex items-center gap-3 my-5">
+  <div className="flex-1 h-px bg-neutral-800"></div>
+
+  <span className="text-xs text-neutral-500 font-semibold">
+    OR
+  </span>
+
+  <div className="flex-1 h-px bg-neutral-800"></div>
+</div>
+
+{/* Google Login */}
+<button
+  type="button"
+  onClick={() =>
+    onLoginSuccess('+213 555 00 00 00')
+  }
+  className="
+    w-full
+    bg-neutral-950
+    border
+    border-neutral-700
+    hover:border-neutral-500
+    rounded-xl
+    py-3
+    flex
+    items-center
+    justify-center
+    gap-3
+    transition-all
+    cursor-pointer
+  "
+>
+  <img
+    src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+    alt="Google"
+    className="w-5 h-5"
+  />
+
+  <span className="font-bold text-white">
+    {isAr
+      ? 'المتابعة بواسطة Google'
+      : 'Continue with Google'}
+  </span>
+</button>
       </form>
 
       {/* Redirect anchor to Captain Register */}
