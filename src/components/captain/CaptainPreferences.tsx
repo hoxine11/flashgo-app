@@ -17,33 +17,39 @@ export default function CaptainPreferences({
 
   const [selected, setSelected] = useState<string[]>([]);
 
-  const options = [
-    {
-      id: 'food',
-      image: '/image/food-removebg-preview.png',
-      title: isAr ? 'توصيل الطعام' : 'Food Delivery'
-    },
-    {
-      id: 'parcel',
-      image: '/image/torod-removebg-preview.png',
-      title: isAr ? 'توصيل الطعام' : 'Food Delivery'
-    },
-    {
-      id: 'parcel',
-      image: '/image/torod-removebg-preview.png',
-      title: isAr ? 'توصيل الطرود' : 'Parcel Delivery'
-    },
-    {
-      id: 'grocery',
-      image: '/image/alimentation-removebg-preview.png',
-      title: isAr ? 'التسوق للزبون' : 'Grocery Shopping'
-    },
-    {
-      id: 'ride',
-      image: '/image/zabon-removebg-preview.png',
-      title: isAr ? 'الزبائن' : 'Ride Service'
-    }
-  ];
+const options = [
+  {
+    id: 'food',
+    image: '/image/food-removebg-preview.png',
+    title: isAr
+      ? 'توصيل الطعام'
+      : 'Food Delivery'
+  },
+
+  {
+    id: 'parcel',
+    image: '/image/torod-removebg-preview.png',
+    title: isAr
+      ? 'توصيل الطرود'
+      : 'Parcel Delivery'
+  },
+
+  {
+    id: 'grocery',
+    image: '/image/alimentation-removebg-preview.png',
+    title: isAr
+      ? 'التسوق للزبون'
+      : 'Grocery Shopping'
+  },
+
+  {
+    id: 'ride',
+    image: '/image/zabon-removebg-preview.png',
+    title: isAr
+      ? 'نقل الزبائن'
+      : 'Ride Service'
+  }
+];
 
   const toggleType = (id: string) => {
 

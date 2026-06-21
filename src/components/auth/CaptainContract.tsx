@@ -1,17 +1,17 @@
 import { ArrowLeft, FileText, Upload } from 'lucide-react';
 import { useState } from 'react';
 
-interface CaptainContractProps {
+interface BusinessContractProps {
   lang: 'ar' | 'en';
   onBack: () => void;
   onSubmit: () => void;
 }
 
-export default function CaptainContract({
+export default function BusinessContract({
   lang,
   onBack,
   onSubmit,
-}: CaptainContractProps) {
+}: BusinessContractProps) {
   const isAr = lang === 'ar';
 
   const [contractFile, setContractFile] =
@@ -42,14 +42,14 @@ export default function CaptainContract({
         <div>
           <h1 className="text-xl font-black">
             {isAr
-              ? 'عقد السائق'
-              : 'Driver Contract'}
+              ? 'عقد الشراكة'
+              : 'Partnership Contract'}
           </h1>
 
           <p className="text-xs text-neutral-500">
             {isAr
-              ? 'تحميل وتوقيع عقد الانضمام إلى FlashGo'
-              : 'Download and sign the FlashGo driver agreement'}
+              ? 'تحميل وتوقيع عقد الشراكة مع FlashGo'
+              : 'Download and sign the FlashGo partnership agreement'}
           </p>
         </div>
       </div>
@@ -65,15 +65,15 @@ export default function CaptainContract({
         "
       >
         <iframe
-          src="/contracts/driver-contract.pdf"
+          src="/image/contracts/business-contract.pdf"
           className="w-full h-[500px]"
-          title="Driver Contract"
+          title="Business Contract"
         />
       </div>
 
       {/* Download */}
       <a
-        href="/contracts/driver-contract.pdf"
+        href="/image/contracts/business-contract.pdf"
         download
         className="
           flex
@@ -91,6 +91,7 @@ export default function CaptainContract({
         "
       >
         <FileText size={18} />
+
         <span>
           {isAr
             ? 'تحميل العقد'
@@ -98,7 +99,7 @@ export default function CaptainContract({
         </span>
       </a>
 
-      {/* Upload signed contract */}
+      {/* Upload */}
       <div
         className="
           bg-neutral-900
