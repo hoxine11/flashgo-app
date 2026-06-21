@@ -65,7 +65,7 @@ export default function BusinessContract({
         "
       >
         <iframe
-          src="/image/contracts/business-contract.pdf"
+          src="/contracts/business-contract.pdf"
           className="w-full h-[500px]"
           title="Business Contract"
         />
@@ -73,7 +73,7 @@ export default function BusinessContract({
 
       {/* Download */}
       <a
-        href="/image/contracts/business-contract.pdf"
+        href="/contracts/business-contract.pdf"
         download
         className="
           flex
