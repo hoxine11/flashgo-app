@@ -439,25 +439,28 @@ export default function PhoneSimulator({
       return (
         <BusinessContract
           lang={lang}
+          onBack={() =>
+            setAuthState('business-verification')
+          }
           onSubmit={() =>
             setAuthState('waiting-approval')
           }
         />
       );
     }
-   if (authState === 'captain-contract') {
-  return (
-    <CaptainContract
-      lang={lang}
-      onBack={() =>
-        setAuthState('captain-register')
-      }
-      onSubmit={() =>
-        setAuthState('waiting-approval')
-      }
-    />
-  );
-}
+    if (authState === 'captain-contract') {
+      return (
+        <CaptainContract
+          lang={lang}
+          onBack={() =>
+            setAuthState('captain-register')
+          }
+          onSubmit={() =>
+            setAuthState('waiting-approval')
+          }
+        />
+      );
+    }
     // =========================
     // AUTHENTICATED
     // =========================
