@@ -41,6 +41,7 @@ import CaptainOrders from './captain/CaptainOrders';
 import CaptainWallet from './captain/CaptainWallet';
 import CaptainProfile from './captain/CaptainProfile';
 import BusinessContract from './auth/BusinessContract';
+import CaptainContract from './auth/CaptainContract';
 // Types
 import {
   SimulatorTab,
@@ -50,7 +51,7 @@ import {
   UserProfile,
 } from '../types';
 import CaptainPreferences from './captain/CaptainPreferences';
-import CaptainContract from './auth/CaptainContract';
+
 
 interface PhoneSimulatorProps {
   lang: 'ar' | 'en';
@@ -444,7 +445,7 @@ export default function PhoneSimulator({
         />
       );
     }
-    if (authState === 'captain-contract') {
+   if (authState === 'captain-contract') {
   return (
     <CaptainContract
       lang={lang}
@@ -452,7 +453,7 @@ export default function PhoneSimulator({
         setAuthState('captain-register')
       }
       onSubmit={() =>
-        setAuthState('captain-waiting')
+        setAuthState('waiting-approval')
       }
     />
   );
