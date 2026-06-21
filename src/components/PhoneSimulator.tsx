@@ -50,6 +50,7 @@ import {
   UserProfile,
 } from '../types';
 import CaptainPreferences from './captain/CaptainPreferences';
+import CaptainContract from './auth/CaptainContract';
 
 interface PhoneSimulatorProps {
   lang: 'ar' | 'en';
@@ -329,7 +330,7 @@ export default function PhoneSimulator({
           lang={lang}
           onRegisterSuccess={(data) => {
             setCaptainData(data);
-            setAuthState('captain-waiting');
+            setAuthState('captain-contract');
           }}
           onSwitchToLogin={() =>
             setAuthState('captain-login')
@@ -443,6 +444,19 @@ export default function PhoneSimulator({
         />
       );
     }
+    if (authState === 'captain-contract') {
+  return (
+    <CaptainContract
+      lang={lang}
+      onBack={() =>
+        setAuthState('captain-register')
+      }
+      onSubmit={() =>
+        setAuthState('captain-waiting')
+      }
+    />
+  );
+}
     // =========================
     // AUTHENTICATED
     // =========================
