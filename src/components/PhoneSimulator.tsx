@@ -40,7 +40,7 @@ import CaptainDashboard from './captain/CaptainDashboard';
 import CaptainOrders from './captain/CaptainOrders';
 import CaptainWallet from './captain/CaptainWallet';
 import CaptainProfile from './captain/CaptainProfile';
-
+import BusinessContract from './auth/BusinessContract';
 // Types
 import {
   SimulatorTab,
@@ -99,6 +99,8 @@ export default function PhoneSimulator({
       | 'business-register'
       | 'business-type'
       | 'business-verification'
+      | 'business-contract'
+      | 'captain-contract'
       | 'waiting-approval'
       | 'captain-preferences'
       | 'authenticated'
@@ -412,7 +414,7 @@ export default function PhoneSimulator({
             setAuthState('business-type')
           }
           onSubmit={() =>
-            setAuthState('waiting-approval')
+            setAuthState('business-contract')
           }
         />
       );
@@ -431,7 +433,16 @@ export default function PhoneSimulator({
         />
       );
     }
-
+    if (authState === 'business-contract') {
+      return (
+        <BusinessContract
+          lang={lang}
+          onSubmit={() =>
+            setAuthState('waiting-approval')
+          }
+        />
+      );
+    }
     // =========================
     // AUTHENTICATED
     // =========================
@@ -646,8 +657,8 @@ export default function PhoneSimulator({
                 setCaptainActiveTab('dashboard')
               }
               className={`flex flex-col items-center flex-1 ${captainActiveTab === 'dashboard'
-                  ? 'text-amber-400'
-                  : 'text-neutral-500'
+                ? 'text-amber-400'
+                : 'text-neutral-500'
                 }`}
             >
               <Home className="h-5 w-5" />
@@ -661,8 +672,8 @@ export default function PhoneSimulator({
                 setCaptainActiveTab('orders')
               }
               className={`flex flex-col items-center flex-1 ${captainActiveTab === 'orders'
-                  ? 'text-amber-400'
-                  : 'text-neutral-500'
+                ? 'text-amber-400'
+                : 'text-neutral-500'
                 }`}
             >
               <Calendar className="h-5 w-5" />
@@ -676,8 +687,8 @@ export default function PhoneSimulator({
                 setCaptainActiveTab('wallet')
               }
               className={`flex flex-col items-center flex-1 ${captainActiveTab === 'wallet'
-                  ? 'text-amber-400'
-                  : 'text-neutral-500'
+                ? 'text-amber-400'
+                : 'text-neutral-500'
                 }`}
             >
               <Wallet className="h-5 w-5" />
@@ -691,8 +702,8 @@ export default function PhoneSimulator({
                 setCaptainActiveTab('profile')
               }
               className={`flex flex-col items-center flex-1 ${captainActiveTab === 'profile'
-                  ? 'text-amber-400'
-                  : 'text-neutral-500'
+                ? 'text-amber-400'
+                : 'text-neutral-500'
                 }`}
             >
               <User className="h-5 w-5" />
